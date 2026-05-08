@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  quality:
+    name: Lint, type-check, test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.11.11"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Lint with ruff
+        run: uv run ruff check .
+
+      - name: Format check with ruff
+        run: uv run ruff format --check .
+
+      - name: Type-check with mypy
+        run: uv run mypy src --ignore-missing-imports
+        # --ignore-missing-imports here because many stubs aren't installed in CI;
+        # full strict mode runs locally where all stubs are in the venv.
+
+      - name: Run tests
+        run: uv run pytest
+        env:
+          # CI doesn't need real keys for the smoke test; real integration tests
+          # should be skipped via pytest marks when keys are absent.
+          OPENAI_API_KEY: "sk-placeholder"
+          COHERE_API_KEY: "placeholder"

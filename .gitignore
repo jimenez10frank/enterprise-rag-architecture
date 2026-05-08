@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environment (uv creates .venv by default)
+.venv/
+venv/
+env/
+
+# uv lock is committed; cache is not
+.uv/
+
+# Type checker / linter caches
+.mypy_cache/
+.ruff_cache/
+.pyright/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Secrets — NEVER commit
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user
+
+# macOS
+.DS_Store
+
+# Docker / infrastructure state
+qdrant_storage/
+
+# Large generated artifacts (regenerable from source)
+data/embeddings/
+
+# Windows
+Thumbs.db
+desktop.ini
