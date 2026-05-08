@@ -1,0 +1,62 @@
+# Ragas golden-set evaluation on main (optional API keys in repo secrets).
+#
+# Without OPENAI_API_KEY the job exits successfully after a skip message.
+
+name: Ragas eval
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    services:
+      qdrant:
+        image: qdrant/qdrant:latest
+        ports:
+          - 6333:6333
+      redis:
+        image: redis/redis-stack:latest
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.11.11"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Ingest demo corpus into Qdrant
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          QDRANT_URL: http://127.0.0.1:6333
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "No OPENAI_API_KEY — skipping ingest and Ragas."
+            exit 0
+          fi
+          uv run python scripts/ingest.py
+
+      - name: Run Ragas eval (Faithfulness gate 0.95)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          QDRANT_URL: http://127.0.0.1:6333
+          REDIS_URL: redis://127.0.0.1:6379
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "No OPENAI_API_KEY — skipping Ragas."
+            exit 0
+          fi
+          uv run python scripts/eval.py --faithfulness-min 0.95 --skip-rerank

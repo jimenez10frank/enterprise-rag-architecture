@@ -11,11 +11,11 @@
 | **1 — Ingestion & structuring** | Hierarchical chunking; vector DB + HNSW + quantization at scale | **Implemented on demo corpus** | Chunker preserves Wet→Lid hierarchy + metadata (`TRAPS` 1). Qdrant setup matches committed params (`001`). **Gap:** corpus is **synthetic HTML** per `011`, not the full ~50 real harvest in `ROADMAP` 2.1 — acceptable for vertical slice if called out in final design/README. |
 | **2 — Retrieval** | Hybrid BM25+dense; fusion; rerank; top-K story | **Implemented** | RRF k=60 (`002`); top-50+50 → fuse → rerank to top-8 (`009`, `TRAPS` 8); RBAC pre-filter (`003`). |
 | **3 — Agentic RAG / CRAG** | Decomposition / HyDE; LangGraph; grader + fallbacks | **Implemented (decomposition + CRAG)** | LangGraph graph with **three-way** grader (`004`, `008`). **HyDE** documented as future complement in `TRAPS` / concepts — not code yet. |
-| **4 — Ops, security, eval** | Semantic cache ≥ safe threshold; RBAC stage; Ragas + CI | **Partial** | Threshold locked in config (`005`). RBAC placement enforced in retrieval. **Cache, FastAPI, Ragas harness, golden set, eval CI** = Phase **5–6** ahead. |
+| **4 — Ops, security, eval** | Semantic cache ≥ safe threshold; RBAC stage; Ragas + CI | **Implemented (demo)** | Threshold + Redis cache (`005`, `013`). FastAPI + golden set + Ragas harness + eval workflow (`010`). RBAC agent verification test (`003`). |
 
 **Overall direction:** The implementation order **follows** `ROADMAP.md` and respects `TRAPS.md` (non-negotiables are reflected in code + tests). The main **honest delta** from the **letter** of Phase 2.1 is the **synthetic demo corpus** (`011`); everything else is **on track** for the “working slice + production design doc” outcome described in `ASSESSMENT.md` § “What this means for scope.”
 
-**Process note:** `ROADMAP.md` asks for comprehension Q&A per sub-phase and ADRs as you go — ADRs **001–012** are now filled; conversational quizzes are **human–agent workflow** (`WORKFLOW.md`), not stored in git.
+**Process note:** `ROADMAP.md` asks for comprehension Q&A per sub-phase and ADRs as you go — ADRs **001–013** are now filled; conversational quizzes are **human–agent workflow** (`WORKFLOW.md`), not stored in git.
 
 ---
 
@@ -35,6 +35,7 @@
 | 010 | Faithfulness as CI deploy-blocker | Accepted | **5.4–5.6** | [010-faithfulness-ci-gate.md](./010-faithfulness-ci-gate.md) |
 | 011 | Synthetic demo corpus (interim) | Accepted | 2 | [011-demo-corpus-synthetic.md](./011-demo-corpus-synthetic.md) |
 | 012 | Pydantic AgentState + test node overrides | Accepted | 4 | [012-agent-state-and-test-overrides.md](./012-agent-state-and-test-overrides.md) |
+| 013 | Redis LIST buckets for semantic cache (demo scale) | Accepted | 5.1 | [013-semantic-cache-redis-buckets.md](./013-semantic-cache-redis-buckets.md) |
 
 ---
 
