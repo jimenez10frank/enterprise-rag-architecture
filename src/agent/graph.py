@@ -55,7 +55,7 @@ def build_agent_graph(
     *,
     skip_rerank: bool = False,
     node_overrides: AgentNodeOverrides | None = None,
-) -> CompiledStateGraph:
+) -> CompiledStateGraph[AgentState, Any, AgentState, AgentState]:
     """Compile the CRAG graph. Use `node_overrides` in unit tests to stub LLM nodes."""
     ov = node_overrides or AgentNodeOverrides()
     retrieve_node = ov.retrieve or make_retrieve_node(

@@ -6,7 +6,7 @@ when a node that needs the LLM actually runs.
 
 from __future__ import annotations
 
-from typing import TypeVar
+from typing import TypeVar, cast
 
 from langchain_core.language_models import LanguageModelInput
 from langchain_core.runnables import Runnable
@@ -36,4 +36,5 @@ def structured_llm(
     temperature: float = 0.0,
 ) -> Runnable[LanguageModelInput, T]:
     """ChatOpenAI with JSON structured output bound to a Pydantic model."""
-    return chat_openai(temperature=temperature).with_structured_output(model_cls)
+    bound = chat_openai(temperature=temperature).with_structured_output(model_cls)
+    return cast(Runnable[LanguageModelInput, T], bound)

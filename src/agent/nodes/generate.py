@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from difflib import SequenceMatcher
+from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -84,7 +85,7 @@ def _chunks_block(chunks: list[Chunk]) -> str:
     return "\n".join(parts)
 
 
-def run_generate(state: AgentState) -> dict[str, object]:
+def run_generate(state: AgentState) -> dict[str, Any]:
     """Structured generation plus post-validation; on failure escalate safely."""
     if not state.retrieved_chunks:
         return run_escalate(

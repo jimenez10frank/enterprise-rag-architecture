@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from src.agent.state import AgentState
 from src.ingestion.schema import Chunk
@@ -19,10 +19,10 @@ def make_retrieve_node(
     qdrant_client: QdrantClient,
     *,
     skip_rerank: bool = False,
-) -> Callable[[AgentState], dict[str, object]]:
+) -> Callable[[AgentState], dict[str, Any]]:
     """Close over RBAC-aware retrieval dependencies (Phase 3 `retrieve`)."""
 
-    def retrieve_node(state: AgentState) -> dict[str, object]:
+    def retrieve_node(state: AgentState) -> dict[str, Any]:
         from src.retrieval import retrieve
 
         qs = state.decomposed_questions

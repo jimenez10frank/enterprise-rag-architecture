@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agent.llm_factory import structured_llm
@@ -15,7 +17,7 @@ optionally clarified slightly without changing legal meaning).
 Output only structured data; never answer the substantive legal question."""
 
 
-def run_decompose(state: AgentState) -> dict[str, object]:
+def run_decompose(state: AgentState) -> dict[str, Any]:
     """LLM: produce one or more retrieval queries from the original question."""
     llm = structured_llm(DecompositionResult, temperature=0.0)
     messages = [

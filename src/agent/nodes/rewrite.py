@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agent.llm_factory import structured_llm
@@ -12,7 +14,7 @@ The prior retrieval pass was ambiguous — improve the query using the grader's 
 Produce one or more focused sub-questions. Do not answer the legal question."""
 
 
-def run_rewrite(state: AgentState) -> dict[str, object]:
+def run_rewrite(state: AgentState) -> dict[str, Any]:
     """LLM: emit refined sub-questions and bump retry_count (single allowed retry)."""
     llm = structured_llm(DecompositionResult, temperature=0.0)
     prior_qs = state.decomposed_questions or [state.original_question]

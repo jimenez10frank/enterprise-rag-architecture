@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agent.llm_factory import structured_llm
@@ -27,7 +29,7 @@ def _format_chunks_for_grader(state: AgentState) -> str:
     return "\n".join(lines)
 
 
-def run_grade(state: AgentState) -> dict[str, object]:
+def run_grade(state: AgentState) -> dict[str, Any]:
     """LLM: classify retrieval quality for the original question."""
     if not state.retrieved_chunks:
         return {

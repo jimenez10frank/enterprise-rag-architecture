@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Any
 from unittest.mock import MagicMock
 
 import pytest
@@ -50,13 +51,13 @@ def test_graph_irrelevant_escalates(
 ) -> None:
     qdrant = MagicMock()
 
-    def stub_decompose(st: AgentState) -> dict[str, object]:
+    def stub_decompose(st: AgentState) -> dict[str, Any]:
         return {"decomposed_questions": [st.original_question]}
 
-    def stub_retrieve(st: AgentState) -> dict[str, object]:
+    def stub_retrieve(st: AgentState) -> dict[str, Any]:
         return {"retrieved_chunks": [_one_public_chunk()]}
 
-    def stub_grade(_st: AgentState) -> dict[str, object]:
+    def stub_grade(_st: AgentState) -> dict[str, Any]:
         return {
             "grade": "irrelevant",
             "grade_reasoning": "off-topic",
@@ -82,13 +83,13 @@ def test_graph_irrelevant_escalates(
 def test_graph_relevant_generates(bm25_minimal: BM25Index) -> None:
     qdrant = MagicMock()
 
-    def stub_decompose(st: AgentState) -> dict[str, object]:
+    def stub_decompose(st: AgentState) -> dict[str, Any]:
         return {"decomposed_questions": [st.original_question]}
 
-    def stub_retrieve(st: AgentState) -> dict[str, object]:
+    def stub_retrieve(st: AgentState) -> dict[str, Any]:
         return {"retrieved_chunks": [_one_public_chunk()]}
 
-    def stub_grade(_st: AgentState) -> dict[str, object]:
+    def stub_grade(_st: AgentState) -> dict[str, Any]:
         return {"grade": "relevant", "grade_reasoning": "ok", "missing_info": None}
 
     cite = Citation(
@@ -102,7 +103,7 @@ def test_graph_relevant_generates(bm25_minimal: BM25Index) -> None:
         confidence="high",
     )
 
-    def stub_generate(_st: AgentState) -> dict[str, object]:
+    def stub_generate(_st: AgentState) -> dict[str, Any]:
         return {"final_answer": answered}
 
     app = build_agent_graph(
@@ -125,17 +126,17 @@ def test_graph_ambiguous_rewrites_once_then_escalates(bm25_minimal: BM25Index) -
     qdrant = MagicMock()
     grade_calls: list[int] = []
 
-    def stub_decompose(st: AgentState) -> dict[str, object]:
+    def stub_decompose(st: AgentState) -> dict[str, Any]:
         return {"decomposed_questions": [st.original_question]}
 
-    def stub_retrieve(st: AgentState) -> dict[str, object]:
+    def stub_retrieve(st: AgentState) -> dict[str, Any]:
         return {"retrieved_chunks": [_one_public_chunk()]}
 
-    def stub_grade(_st: AgentState) -> dict[str, object]:
+    def stub_grade(_st: AgentState) -> dict[str, Any]:
         grade_calls.append(1)
         return {"grade": "ambiguous", "grade_reasoning": "need year", "missing_info": "year"}
 
-    def stub_rewrite(st: AgentState) -> dict[str, object]:
+    def stub_rewrite(st: AgentState) -> dict[str, Any]:
         return {
             "decomposed_questions": [st.original_question + " 2024"],
             "retry_count": st.retry_count + 1,
@@ -169,19 +170,19 @@ def test_graph_multipart_decompose_retrieves_twice_merges(
     qdrant = MagicMock()
     ch = _one_public_chunk()
 
-    def stub_decompose(_st: AgentState) -> dict[str, object]:
+    def stub_decompose(_st: AgentState) -> dict[str, Any]:
         return {"decomposed_questions": ["Wat is tarief?", "Welke wet?"]}
 
     retrieved: list[str] = []
 
-    def stub_retrieve(st: AgentState) -> dict[str, object]:
+    def stub_retrieve(st: AgentState) -> dict[str, Any]:
         retrieved.extend(st.decomposed_questions or [])
         return {"retrieved_chunks": [ch]}
 
-    def stub_grade(_st: AgentState) -> dict[str, object]:
+    def stub_grade(_st: AgentState) -> dict[str, Any]:
         return {"grade": "relevant", "grade_reasoning": "ok", "missing_info": None}
 
-    def stub_generate(_st: AgentState) -> dict[str, object]:
+    def stub_generate(_st: AgentState) -> dict[str, Any]:
         cite = Citation(
             chunk_id=ch.chunk_id,
             artikel="1",

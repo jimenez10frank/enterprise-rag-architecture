@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from src.agent.state import AgentState, Answer
 
 
-def run_escalate(state: AgentState) -> dict[str, object]:
+def run_escalate(state: AgentState) -> dict[str, Any]:
     """Return a safe refusal — no LLM generation from weak context (TRAP 7)."""
     if state.grade == "irrelevant":
         reason = (
