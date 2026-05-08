@@ -10,17 +10,17 @@
 
 | # | Topic | Status | Used in phase |
 |---|-------|--------|---------------|
-| 01 | [Vectors and embeddings](./01-vectors-and-embeddings.md) | TODO | 2 |
-| 02 | [HNSW algorithm](./02-hnsw.md) | TODO | 2 |
-| 03 | [Quantization (scalar, binary, product)](./03-quantization.md) | TODO | 2 |
-| 04 | [BM25 vs dense retrieval](./04-bm25-vs-dense.md) | TODO | 3 |
-| 05 | [Reciprocal Rank Fusion](./05-rrf.md) | TODO | 3 |
-| 06 | [Reranking and cross-encoders](./06-reranking.md) | TODO | 3 |
-| 07 | [Hierarchical chunking for legal documents](./07-hierarchical-chunking.md) | TODO | 2 |
-| 08 | [RBAC at the retrieval layer](./08-rbac-pre-filter.md) | TODO | 2, 3, 5 |
-| 09 | [LangGraph and CRAG](./09-langgraph-crag.md) | TODO | 4 |
-| 10 | [Semantic caching](./10-semantic-cache.md) | TODO | 5 |
-| 11 | [RAG evaluation (Faithfulness, Context Precision, ...)](./11-rag-evaluation.md) | TODO | 5 |
+| 01 | [Vectors and embeddings](./01-vectors-and-embeddings.md) | Done | 2 |
+| 02 | [HNSW algorithm](./02-hnsw.md) | Done | 2 |
+| 03 | [Quantization (scalar, binary, product)](./03-quantization.md) | Done | 2 |
+| 04 | [BM25 vs dense retrieval](./04-bm25-vs-dense.md) | Done | 3 |
+| 05 | [Reciprocal Rank Fusion](./05-rrf.md) | Done | 3 |
+| 06 | [Reranking and cross-encoders](./06-reranking.md) | Done | 3 |
+| 07 | [Hierarchical chunking for legal documents](./07-hierarchical-chunking.md) | Done | 2 |
+| 08 | [RBAC at the retrieval layer](./08-rbac-pre-filter.md) | Done | 2, 3, 5 |
+| 09 | [LangGraph and CRAG](./09-langgraph-crag.md) | Done | 4 |
+| 10 | [Semantic caching](./10-semantic-cache.md) | Done | 5 |
+| 11 | [RAG evaluation (Faithfulness, Context Precision, ...)](./11-rag-evaluation.md) | Done | 5 |
 
 ---
 
