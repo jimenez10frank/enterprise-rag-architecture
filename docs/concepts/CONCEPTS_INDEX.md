@@ -49,7 +49,7 @@ that to ~62 GB."]
 
 ## How it appears in our code
 [Pointer to the file and function in src/ where this concept is implemented.
-Filled in during implementation phases — leave a TODO during Phase 1.]
+Each numbered concept doc in this folder includes an implementation pointer when relevant.]
 
 ## What I had to look up to write this
 [Honesty section. Useful for the AI usage writeup later.]

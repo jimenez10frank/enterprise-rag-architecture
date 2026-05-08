@@ -13,9 +13,11 @@
 
 ## Current phase
 
-**Phase 6 — Polish and final artifacts (design doc, README, AI_USAGE, demo)**
+**Phase 6 — complete (implementation + docs in repo).**
+Manual steps remaining (not automated): record **Loom** and paste URL into `README.md`; on GitHub set repo **description + topics**; tag **`v1.0`** and publish release when ready.
+
 Started: 2026-05-08
-Target completion: TBD
+Target completion: done in-tree; release polish is owner-driven
 
 ---
 
@@ -67,16 +69,17 @@ Target completion: TBD
 - [x] **5.4** — Ragas harness: `src/eval/ragas_runner.py`, CLI `scripts/eval.py` (`--skip-rerank`, `--faithfulness-min`), tests `src/eval/test_ragas_runner.py`.
 - [x] **5.5** — Golden set: `data/golden/golden_set.jsonl` (18 rows: answered, escalated, RBAC, OOD).
 - [x] **5.6** — Workflow `.github/workflows/eval.yml` (main + manual; Qdrant + Redis service containers; ingest + Ragas gate when `OPENAI_API_KEY` present).
+- [x] **6.1** — Architecture design doc: `docs/design/architecture.md` (four ASSESSMENT modules, mermaid diagrams, parameters, TRAPS matrix, demo vs production, future work).
+- [x] **6.2** — README rewrite: project summary, quick start, architecture mermaid, links, CI badge, Loom placeholder.
+- [x] **6.3** — AI usage writeup completed for submission: `docs/AI_USAGE.md` (tools, prompts, phase table, difficulties, learnings).
+- [x] **6.4** — Loom: README section + script pointer to `ROADMAP.md` Phase 6.4; **owner records video and pastes URL**.
+- [x] **6.5** — Codebase TODOs in `src/` none; **pytest** green locally (2026-05-08). Lint/type-check as in GitHub Actions. **Not committed** per session request. **v1.0 tag / GitHub topics** remain manual.
 
 ---
 
 ## Doing now
 
-- [ ] **6.1** — Architecture design document.
-- [ ] **6.2** — README rewrite.
-- [ ] **6.3** — AI usage writeup.
-- [ ] **6.4** — Loom demo (3 min).
-- [ ] **6.5** — Final cleanup, tag v1.0, share the repo link.
+_None — all roadmap sub-phases delivered in repository._
 
 ---
 
@@ -84,7 +87,7 @@ Target completion: TBD
 
 _Things that need my input before continuing. Add as they arise._
 
-- [ ] None.
+- [ ] Optional **comprehension Q&A** for Phase 6 closure per `WORKFLOW.md` (human ritual).
 
 ---
 
@@ -96,16 +99,16 @@ _Architectural decisions live as ADRs in `docs/decisions/`. Summaries also appea
 - **011:** Interim **synthetic** demo corpus (`data/raw/`) vs full real harvest in `ROADMAP` 2.1 — scope documented for reviewers.
 - **012:** Pydantic `AgentState` + `AgentNodeOverrides` for testable LangGraph routing.
 - **013:** Redis LIST + per-bucket linear scan for semantic cache at demo scale (upgrade path: RediSearch KNN).
-- **AI / process log:** `docs/AI_USAGE.md` (expand each session for Phase 6 submission).
-- **Legacy bullets:** Repo name `legal-rag-nl`; cache threshold **0.97** canonical; Python **3.12.5**.
+- **AI / process log:** `docs/AI_USAGE.md` (Phase 6 submission refresh).
+- **Legacy bullets:** Repo name `legal-rag-nl`; cache threshold **0.97** canonical; Python **3.12.5** (local) / CI **3.11**.
 
 ---
 
 ## Last session summary
 
-**2026-05-08 (session 5):** Phase **5** completed end-to-end (not committed per request). Semantic cache (TRAP 5: ≥0.97, role + corpus buckets), FastAPI + cache headers, 18-row golden `jsonl`, Ragas runner (Faithfulness mean gate on **answered** subset), `eval.yml` on `main` with optional API key skip. New tests: ops cache, API (TestClient + lifespan), eval loader/builder, agent RBAC integration. Full suite: **82 pytest** passed, **1 skipped** (optional Redis integration). **Comprehension Q&A** for Phase 5 per `WORKFLOW.md` / `ROADMAP.md` is still for the human to close before ticking ritual “done.”
+**2026-05-08 (session 6 — Phase 6):** Delivered **`docs/design/architecture.md`** (full production-scale design mapped to `ASSESSMENT.md` + every `TRAPS.md` item), **`README.md`** front page (badges → `jimenez10frank/Enterprise-RAG-Architecture`, quick start, doc map, Loom placeholder), **`docs/AI_USAGE.md`** submission structure with real prompt examples and phase ownership table. Minor doc polish: `CONCEPTS_INDEX.md` template line, Faithfulness **≥ 0.95** gate called out in architecture; fixed CRAG mermaid note syntax. **Verification:** `python -m pytest` → **82 passed, 1 skipped** on Windows (global Python 3.12; `ruff`/`mypy` modules not installed in that interpreter — **CI** in `.github/workflows/ci.yml` still runs lint + type-check). **No git commit** per request. **Still manual:** Loom URL in README, GitHub description/topics, `git tag v1.0`.
 
-Next session starts with **Phase 6.1** — `docs/design/architecture.md`.
+**2026-05-08 (session 5):** Phase **5** completed end-to-end (not committed per request). Semantic cache (TRAP 5: ≥0.97, role + corpus buckets), FastAPI + cache headers, 18-row golden `jsonl`, Ragas runner (Faithfulness mean gate on **answered** subset), `eval.yml` on `main` with optional API key skip. New tests: ops cache, API (TestClient + lifespan), eval loader/builder, agent RBAC integration. Full suite: **82 pytest** passed, **1 skipped** (optional Redis integration). **Comprehension Q&A** for Phase 5 per `WORKFLOW.md` / `ROADMAP.md` is still for the human to close before ticking ritual “done.”
 
 **2026-05-08 (session 4):** Phase 4 completed. LangGraph CRAG pipeline with Pydantic `AgentState`, decomposition, hybrid retrieval per sub-question, three-way grading (TRAP 7), single rewrite loop, escalation without LLM generation from bad context, and generation with citation validation + one repair attempt (TRAP 6). RBAC remains pre-filter only inside `retrieve()` (TRAP 2). `build_agent_graph(bm25, qdrant, ...)` compiles the graph; `AgentNodeOverrides` enables fully stubbed routing tests without OpenAI/Qdrant. Suite: **67 pytest** tests passing (not committed per session request).
 
@@ -121,15 +124,13 @@ Next session starts with **Phase 6.1** — `docs/design/architecture.md`.
 
 ## Velocity log
 
-_Track how long each phase actually took vs. the target. Useful for scheduling the remaining phases._
-
 | Phase | Target | Actual | Notes |
 |-------|--------|--------|-------|
-| 0     | 0.5d   | ~2h    | uv install added time; otherwise smooth |
-| 1     | 1d     | ~1h    | All 11 concept docs written in one session |
-| 2     | 2d     | ~2h    | Synthetic corpus + chunker + embed + Qdrant setup + ingestion script |
-| 3     | 1.5d   | ~2h    | BM25 + dense + RRF + reranker + retrieve() + 51 tests; qdrant-client 1.17 API migration |
-| 4     | 2d     | ~1 session | LangGraph CRAG + tests |
-| 5     | 1.5d   | ~1 session | Cache, API, golden+Ragas, eval workflow |
-| 6     | 1.5d   | -      | -     |
-| **Total** | **10d** | -  | -     |
+| 0 | 0.5d | ~2h | uv install added time; otherwise smooth |
+| 1 | 1d | ~1h | All 11 concept docs written in one session |
+| 2 | 2d | ~2h | Synthetic corpus + chunker + embed + Qdrant setup + ingestion script |
+| 3 | 1.5d | ~2h | BM25 + dense + RRF + reranker + retrieve() + 51 tests; qdrant-client 1.17 API migration |
+| 4 | 2d | ~1 session | LangGraph CRAG + tests |
+| 5 | 1.5d | ~1 session | Cache, API, golden+Ragas, eval workflow |
+| 6 | 1.5d | ~1 session | Design README AI_USAGE; Loom/video + v1.0 tag manual |
+| **Total** | **10d** | - | |
