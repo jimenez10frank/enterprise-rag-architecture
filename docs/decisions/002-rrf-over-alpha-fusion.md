@@ -14,7 +14,7 @@ Hybrid retrieval combines **BM25** (sparse) and **dense** vectors. Their **raw s
 
 - **Description:** `score = α * dense + (1-α) * sparse` after ad hoc normalization.
 - **Pros:** Simple to implement; familiar from tutorials.
-- **Cons:** Brittle without per-query normalization; BM25 unbounded vs bounded cosine — **mathematically weak** for mixed query types (`TRAPS.md` TRAP 4).
+- **Cons:** Brittle without per-query normalization; BM25 unbounded vs bounded cosine — **mathematically weak** for mixed query types (`docs/project/TRAPS.md` TRAP 4).
 
 ### Option B: Reciprocal Rank Fusion (RRF), k=60
 
@@ -29,7 +29,7 @@ We chose **Option B (RRF, k=60)**.
 Reasoning:
 
 - Legal retrieval must handle **both** exact-token and semantic queries without a separate “query type classifier”; RRF composes naturally.
-- Meets the **non-negotiable** constraint in `TRAPS.md` TRAP 4.
+- Meets the **non-negotiable** constraint in `docs/project/TRAPS.md` TRAP 4.
 
 ## Consequences
 
@@ -41,6 +41,6 @@ Reasoning:
 
 ## References
 
-- `TRAPS.md` TRAP 4
+- `docs/project/TRAPS.md` TRAP 4
 - `docs/concepts/05-rrf.md`
 - `src/retrieval/fusion.py`

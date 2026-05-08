@@ -35,7 +35,7 @@ def rrf(rankings: list[list[str]], k: int = 60) -> list[tuple[str, float]]:
     return sorted(scores.items(), key=lambda x: x[1], reverse=True)
 ```
 
-This is the complete implementation from TRAPS.md. It's that simple.
+This is the complete implementation from [`TRAPS.md`](../project/TRAPS.md). It's that simple.
 
 ## Concrete example
 

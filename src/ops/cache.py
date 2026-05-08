@@ -1,4 +1,4 @@
-"""Semantic query cache backed by Redis (TRAPS.md TRAP 5).
+"""Semantic query cache backed by Redis (docs/project/TRAPS.md TRAP 5).
 
 We bucket entries by ``(role_hash, corpus_version)`` so helpdesk users never
 reuse answers computed for FIOD-only contexts, and corpus bumps invalidate

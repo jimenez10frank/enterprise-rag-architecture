@@ -20,7 +20,7 @@ Two reasons specific to us:
 | `ef_construct` | 256 | How many candidates to explore while building the index. Higher = slower build, better index quality. 400 is the max sensible value; 256 is our balance. |
 | `ef` (search-time) | 128–256 | How many candidates to explore during query. Higher = better recall, higher latency. Tune this against our latency budget. |
 
-These live in `STACK.md` as our committed configuration.
+These live in [`STACK.md`](../project/STACK.md) as our committed configuration.
 
 ## Concrete example
 

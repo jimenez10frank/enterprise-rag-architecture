@@ -16,7 +16,7 @@ Module 4 of the assessment requires **automatic evaluation** before rolling new 
 
 ### Option B: **Faithfulness < 0.95 fails CI**; other metrics warn
 
-- **Pros:** Matches `TRAPS.md` TRAP 11 and `STACK.md` evaluation section.
+- **Pros:** Matches `docs/project/TRAPS.md` TRAP 11 and `docs/project/STACK.md` evaluation section.
 
 ## Decision
 
@@ -30,10 +30,10 @@ Reasoning:
 
 **What this makes easy:** Defensible release gate in Phase 6 architecture narrative.
 
-**What this makes hard:** Golden set curation workload; API cost for eval on `main` — scope to labeled runs (`ROADMAP.md`).
+**What this makes hard:** Golden set curation workload; API cost for eval on `main` — scope to labeled runs (`docs/project/ROADMAP.md`).
 
 ## References
 
-- `TRAPS.md` TRAP 11
-- `STACK.md` (Evaluation)
+- `docs/project/TRAPS.md` TRAP 11
+- `docs/project/STACK.md` (Evaluation)
 - `docs/concepts/11-rag-evaluation.md`

@@ -6,7 +6,7 @@
 
 ## Context
 
-`ROADMAP.md` Phase 2.1 describes downloading ~**50 real** articles and rulings from `wetten.overheid.nl` and related sources. `ASSESSMENT.md` asks for a **working vertical slice** on ~**50 real** documents while the **design doc** carries production scale.
+`docs/project/ROADMAP.md` Phase 2.1 describes downloading ~**50 real** articles and rulings from `wetten.overheid.nl` and related sources. `docs/project/ASSESSMENT.md` asks for a **working vertical slice** on ~**50 real** documents while the **design doc** carries production scale.
 
 **Actual progress (PROGRESS.md):** Phase 2 uses **16 synthetic HTML files** (`data/raw/README.md`) that **mimic** Dutch legal structure and RBAC metadata, but are **not** copies of government publications.
 
@@ -41,6 +41,6 @@ Reasoning:
 
 ## References
 
-- `ROADMAP.md` § Phase 2.1
+- `docs/project/ROADMAP.md` § Phase 2.1
 - `data/raw/README.md`
-- `PROGRESS.md`
+- `docs/project/PROGRESS.md`

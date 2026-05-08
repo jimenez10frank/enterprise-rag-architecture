@@ -2,7 +2,7 @@
 
 Splits documents along their structural boundaries (artikel → lid → sub),
 NOT by character count. Standard text splitters destroy hierarchical
-context and make precise legal citation impossible. See TRAPS.md TRAP 1.
+context and make precise legal citation impossible. See docs/project/TRAPS.md TRAP 1.
 
 Parsing strategy:
   - Document-level metadata from <meta> tags in <head>.

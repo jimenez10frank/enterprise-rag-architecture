@@ -15,7 +15,7 @@ landed at rank 23 in the initial retrieval.
 
 Production note: replace with self-hosted BAAI/bge-reranker-v2-m3 for any
 classified content — sending classified document text to Cohere's API is a
-data residency violation. See TRAPS.md TRAP 10 (same reasoning applies).
+data residency violation. See docs/project/TRAPS.md TRAP 10 (same reasoning applies).
 
 See docs/concepts/06-reranking.md.
 """

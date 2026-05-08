@@ -1,4 +1,4 @@
-"""Context grader: three-way relevance before generation (TRAPS.md TRAP 7)."""
+"""Context grader: three-way relevance before generation (docs/project/TRAPS.md TRAP 7)."""
 
 from __future__ import annotations
 

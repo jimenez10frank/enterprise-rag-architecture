@@ -14,7 +14,7 @@ The scenario includes **classified FIOD-style** content. Helpdesk users must not
 
 - **Description:** Retrieve top-K, then drop unauthorized chunks.
 - **Pros:** Easy to code.
-- **Cons:** **Information leakage** via ranking neighbourhood / score gaps (`TRAPS.md` TRAP 2).
+- **Cons:** **Information leakage** via ranking neighbourhood / score gaps (`docs/project/TRAPS.md` TRAP 2).
 
 ### Option B: Prompt-level “do not use classified”
 
@@ -39,12 +39,12 @@ Reasoning:
 
 **What this makes easy:** Integration tests that prove FIOD payloads never return for `public`/`helpdesk` roles.
 
-**What this makes hard:** Semantic cache (Phase 5) must be **role-keyed** or cache becomes an RBAC bypass (`TRAPS.md` TRAP 5).
+**What this makes hard:** Semantic cache (Phase 5) must be **role-keyed** or cache becomes an RBAC bypass (`docs/project/TRAPS.md` TRAP 5).
 
 **Rollback path:** None compatible with assessment — reversing this would fail the security story.
 
 ## References
 
-- `TRAPS.md` TRAP 2
+- `docs/project/TRAPS.md` TRAP 2
 - `docs/concepts/08-rbac-pre-filter.md`
 - `src/retrieval/dense.py`, `src/retrieval/bm25.py`

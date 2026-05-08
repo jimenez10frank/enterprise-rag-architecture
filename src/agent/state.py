@@ -19,7 +19,7 @@ Confidence = Literal["high", "medium", "low"]
 
 
 class Citation(BaseModel):
-    """Single source-backed anchor for a claim (TRAPS.md TRAP 6)."""
+    """Single source-backed anchor for a claim (docs/project/TRAPS.md TRAP 6)."""
 
     chunk_id: str = Field(description="Must match a retrieved chunk_id exactly")
     artikel: str = Field(description="Article reference from chunk metadata")
@@ -53,7 +53,7 @@ class Answer(BaseModel):
 
 
 class GradeResult(BaseModel):
-    """Three-way retrieval quality grade (TRAPS.md TRAP 7)."""
+    """Three-way retrieval quality grade (docs/project/TRAPS.md TRAP 7)."""
 
     grade: GradeLabel
     reasoning: str = Field(..., min_length=1)

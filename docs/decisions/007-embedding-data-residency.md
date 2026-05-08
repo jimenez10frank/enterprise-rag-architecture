@@ -6,7 +6,7 @@
 
 ## Context
 
-`TRAPS.md` TRAP 10: sending **classified** text to third-party embedding APIs is typically **incompatible** with data residency and insider-data policies. The assessment still expects a **working demo** on predominantly public legal text.
+`docs/project/TRAPS.md` TRAP 10: sending **classified** text to third-party embedding APIs is typically **incompatible** with data residency and insider-data policies. The assessment still expects a **working demo** on predominantly public legal text.
 
 ## Options considered
 
@@ -39,6 +39,6 @@ Reasoning:
 
 ## References
 
-- `TRAPS.md` TRAP 10
-- `STACK.md` (Embeddings)
+- `docs/project/TRAPS.md` TRAP 10
+- `docs/project/STACK.md` (Embeddings)
 - `src/ingestion/embed.py`

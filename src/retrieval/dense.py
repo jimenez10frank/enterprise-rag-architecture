@@ -5,7 +5,7 @@ is traversed. Classified chunks are never visited during search — they
 cannot influence rankings, and their existence cannot be inferred from
 result gaps.
 
-This is the mathematically safe RBAC placement. See TRAPS.md TRAP 2 and
+This is the mathematically safe RBAC placement. See docs/project/TRAPS.md TRAP 2 and
 docs/concepts/08-rbac-pre-filter.md for the full reasoning.
 
 NEVER move the filter to a post-retrieval Python step:
@@ -78,7 +78,7 @@ def dense_search(
         client: Qdrant client instance.
         query_vector: Embedded query (must match the collection's vector size).
         user_roles: Roles held by the querying user.
-        top_k: Number of results to return (should be 50 per STACK.md).
+        top_k: Number of results to return (should be 50 per docs/project/STACK.md).
         search_params: Optional SearchParams (e.g. with quantization rescoring).
 
     Returns:

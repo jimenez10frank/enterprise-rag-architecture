@@ -7,7 +7,7 @@ Every claim the LLM makes traces back to a chunk_id defined here.
 The classification + allowed_roles pair on every chunk is the foundation
 of the RBAC pre-filter. Both fields must be present on every chunk — a
 missing classification is a type error at construction time, not a silent
-security gap discovered at runtime. See TRAPS.md TRAP 2.
+security gap discovered at runtime. See docs/project/TRAPS.md TRAP 2.
 """
 
 from __future__ import annotations

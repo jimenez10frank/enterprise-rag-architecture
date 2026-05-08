@@ -1,10 +1,10 @@
 # Architectural Decision Records — Index
 
-> Every architectural choice gets an ADR. They are numbered sequentially. If reversed, add a **new** ADR that supersedes the old one — do not erase history (`WORKFLOW.md` / template below).
+> Every architectural choice gets an ADR. They are numbered sequentially. If reversed, add a **new** ADR that supersedes the old one — do not erase history (`docs/project/WORKFLOW.md` / template below).
 
 ---
 
-## Alignment with `ASSESSMENT.md` (authoritative requirements)
+## Alignment with `docs/project/ASSESSMENT.md` (authoritative requirements)
 
 | Module (assessment) | Required focus | Repo status (Phase 5 entry) | Notes |
 |---------------------|----------------|----------------------------|--------|
@@ -13,9 +13,9 @@
 | **3 — Agentic RAG / CRAG** | Decomposition / HyDE; LangGraph; grader + fallbacks | **Implemented (decomposition + CRAG)** | LangGraph graph with **three-way** grader (`004`, `008`). **HyDE** documented as future complement in `TRAPS` / concepts — not code yet. |
 | **4 — Ops, security, eval** | Semantic cache ≥ safe threshold; RBAC stage; Ragas + CI | **Implemented (demo)** | Threshold + Redis cache (`005`, `013`). FastAPI + golden set + Ragas harness + eval workflow (`010`). RBAC agent verification test (`003`). |
 
-**Overall direction:** The implementation order **follows** `ROADMAP.md` and respects `TRAPS.md` (non-negotiables are reflected in code + tests). The main **honest delta** from the **letter** of Phase 2.1 is the **synthetic demo corpus** (`011`); everything else is **on track** for the “working slice + production design doc” outcome described in `ASSESSMENT.md` § “What this means for scope.”
+**Overall direction:** The implementation order **follows** `docs/project/ROADMAP.md` and respects `docs/project/TRAPS.md` (non-negotiables are reflected in code + tests). The main **honest delta** from the **letter** of Phase 2.1 is the **synthetic demo corpus** (`011`); everything else is **on track** for the “working slice + production design doc” outcome described in `docs/project/ASSESSMENT.md` § “What this means for scope.”
 
-**Process note:** `ROADMAP.md` asks for comprehension Q&A per sub-phase and ADRs as you go — ADRs **001–013** are now filled; conversational quizzes are **human–agent workflow** (`WORKFLOW.md`), not stored in git.
+**Process note:** `docs/project/ROADMAP.md` asks for comprehension Q&A per sub-phase and ADRs as you go — ADRs **001–013** are now filled; conversational quizzes are **human–agent workflow** (`docs/project/WORKFLOW.md`), not stored in git.
 
 ---
 
@@ -93,8 +93,8 @@ Reasoning:
 
 ## References
 
-- `TRAPS.md` TRAP [N]
-- `STACK.md` section [...]
+- `docs/project/TRAPS.md` TRAP [N]
+- `docs/project/STACK.md` section [...]
 ```
 
 ---

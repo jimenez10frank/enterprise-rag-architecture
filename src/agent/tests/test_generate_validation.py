@@ -1,4 +1,4 @@
-"""Offline tests for citation validation (TRAPS.md TRAP 6)."""
+"""Offline tests for citation validation (docs/project/TRAPS.md TRAP 6)."""
 
 from __future__ import annotations
 

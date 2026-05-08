@@ -1,7 +1,7 @@
 """Qdrant collection setup and search parameter helpers.
 
 Creates the collection with the HNSW and quantization parameters committed
-in STACK.md. Idempotent: safe to call on an already-existing collection.
+in docs/project/STACK.md. Idempotent: safe to call on an already-existing collection.
 
 Production parameters (and why):
   m=32            Higher recall for legal domain (vs generic m=16). Legal

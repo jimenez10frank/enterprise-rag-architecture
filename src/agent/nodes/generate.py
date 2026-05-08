@@ -1,4 +1,7 @@
-"""Generation with citation validation and a single repair attempt (TRAPS.md TRAP 6)."""
+"""Generation with citation validation and a single repair attempt.
+
+See docs/project/TRAPS.md (TRAP 6).
+"""
 
 from __future__ import annotations
 

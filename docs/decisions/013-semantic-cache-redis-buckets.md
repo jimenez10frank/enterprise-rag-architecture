@@ -10,7 +10,7 @@ Implement buckets `semantic_cache:{role_hash}:{corpus_version}` as Redis LISTs o
 
 ## Consequences
 
-- **Pros:** Works on any Redis deployment (no module-specific index setup); trivial to debug; TRAPS.md TRAP 5 allows manual cosine for the demo.
+- **Pros:** Works on any Redis deployment (no module-specific index setup); trivial to debug; `docs/project/TRAPS.md` TRAP 5 allows manual cosine for the demo.
 - **Cons:** O(n) per bucket — replace with RediSearch KNN when buckets grow beyond hundreds of entries per role.
 
 ## Status

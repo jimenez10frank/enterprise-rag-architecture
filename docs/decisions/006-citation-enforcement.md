@@ -12,7 +12,7 @@ The assessment demands **exact citations** per claim and **zero hallucination to
 
 ### Option A: Prompt-only (“always cite your sources”)
 
-- **Cons:** Non-deterministic omissions and fabricated citations (`TRAPS.md` TRAP 6).
+- **Cons:** Non-deterministic omissions and fabricated citations (`docs/project/TRAPS.md` TRAP 6).
 
 ### Option B: Pydantic `Answer` + OpenAI structured output + post-validation
 
@@ -36,5 +36,5 @@ Reasoning:
 
 ## References
 
-- `TRAPS.md` TRAP 6
+- `docs/project/TRAPS.md` TRAP 6
 - `src/agent/state.py`, `src/agent/nodes/generate.py`

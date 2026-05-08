@@ -4,7 +4,7 @@ Combines BM25 (sparse) and dense ranked lists into a single ranking without
 alpha-weighted score fusion. Alpha fusion is wrong here because BM25 scores
 (unbounded above) and cosine similarities (bounded [-1, 1]) are not on the
 same scale. RRF uses ranks, not raw scores, making it scale-agnostic and
-mathematically defensible. See TRAPS.md TRAP 4.
+mathematically defensible. See docs/project/TRAPS.md TRAP 4.
 
 The implementation is the exact formula from the original paper:
   Cormack, Clarke, Buettcher (SIGIR 2009)
