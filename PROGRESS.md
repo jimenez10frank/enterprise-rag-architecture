@@ -13,9 +13,9 @@
 
 ## Current phase
 
-**Phase 1 — Concept docs**
+**Phase 4 — CRAG agent (LangGraph state machine)**
 Started: 2026-05-08
-Target completion: 2026-05-09
+Target completion: TBD
 
 ---
 
@@ -28,41 +28,37 @@ Target completion: 2026-05-09
 - [x] **0.5** — `.env.example` with all required vars; `src/config.py` with Pydantic Settings singleton (0.97 cache threshold enforced via `ge` constraint).
 - [x] **0.6** — Full directory skeleton from `PROJECT_STRUCTURE.md` created; empty `__init__.py` files in all packages; `src/test_smoke.py` passes.
 - [x] **0.7** — `.github/workflows/ci.yml` written (uv install → ruff → mypy → pytest on every push).
+- [x] **1.1** — Concept doc: vectors and embeddings (`docs/concepts/01-vectors-and-embeddings.md`).
+- [x] **1.2** — Concept doc: HNSW (`docs/concepts/02-hnsw.md`).
+- [x] **1.3** — Concept doc: quantization (`docs/concepts/03-quantization.md`).
+- [x] **1.4** — Concept doc: BM25 vs dense (`docs/concepts/04-bm25-vs-dense.md`).
+- [x] **1.5** — Concept doc: RRF (`docs/concepts/05-rrf.md`).
+- [x] **1.6** — Concept doc: reranking and cross-encoders (`docs/concepts/06-reranking.md`).
+- [x] **1.7** — Concept doc: hierarchical chunking (`docs/concepts/07-hierarchical-chunking.md`).
+- [x] **1.8** — Concept doc: RBAC at the retrieval layer (`docs/concepts/08-rbac-pre-filter.md`).
+- [x] **1.9** — Concept doc: LangGraph and CRAG (`docs/concepts/09-langgraph-crag.md`).
+- [x] **1.10** — Concept doc: semantic caching (`docs/concepts/10-semantic-cache.md`).
+- [x] **1.11** — Concept doc: RAG evaluation (`docs/concepts/11-rag-evaluation.md`).
+- [x] **2.1** — 16 synthetic HTML legal docs (13 public Wet IB 2001 + 3 FIOD internal) + README in `data/raw/`.
+- [x] **2.2** — `ChunkMetadata` and `Chunk` Pydantic models in `src/ingestion/schema.py`. Three-tier RBAC: public/internal/fiod, `allowed_roles` list on every chunk.
+- [x] **2.3** — Hierarchical chunker in `src/ingestion/chunker.py`. Parses Wet→Hoofdstuk→Afdeling→Artikel→Lid→Sub. One lid = one chunk. No character/token splitters (TRAP 1).
+- [x] **2.4** — 21 chunker tests in `src/ingestion/test_chunker.py`. TRAP 1 guard (asserts no character splitter class names in source). FIOD classification/role isolation verified. All pass.
+- [x] **2.5** — Disk-cached embedding pipeline in `src/ingestion/embed.py`. Batch size 100, cache at `data/embeddings/<chunk_id>.json`.
+- [x] **2.6** — Qdrant collection setup in `src/ingestion/qdrant_setup.py`. m=32, ef_construct=256, scalar int8 quantization (quantile=0.99, always_ram=True). Payload indexes on classification, allowed_roles, wet, effective_date.
+- [x] **2.7** — Bulk ingestion script at `scripts/ingest.py`. Flags: --recreate, --dry-run, --force-embed. Deterministic point IDs via uuid5.
+- [x] **2.8** — RBAC smoke test: 5 integration tests in `src/retrieval/tests/test_rbac_integration.py`. Verified public cannot see FIOD, helpdesk cannot see FIOD, FIOD sees all, filter is server-side (pre-HNSW), latency under 500ms.
+- [x] **3.1** — BM25 index in `src/retrieval/bm25.py`. RBAC filter before scoring. IDF=0 edge case documented in tests (need ≥3 docs). 14 tests pass.
+- [x] **3.2** — Dense retrieval in `src/retrieval/dense.py`. FieldCondition on allowed_roles runs inside Qdrant before HNSW (TRAP 2). Updated to qdrant-client 1.17 API (`query_points()` not `search()`).
+- [x] **3.3** — RRF fusion in `src/retrieval/fusion.py`. Pure rank-based, k=60, `rrf_from_scored()` strips raw scores before fusing. 10 tests including `test_rrf_not_alpha_weighted` (TRAP 4). All pass.
+- [x] **3.4** — Cohere reranker in `src/retrieval/rerank.py`. `rerank-multilingual-v3.0`. Top-50 → top-8 (TRAP 8).
+- [x] **3.5** — End-to-end `retrieve()` in `src/retrieval/__init__.py`. Lazy imports to avoid Settings() at module load. TYPE_CHECKING guards for type annotations.
+- [x] **3.6** — Full retrieval test suite: 10 fusion + 14 BM25 + 5 RBAC integration = **51 tests, all passing**.
 
 ---
 
 ## Doing now
 
-- [ ] **1.1** — Concept doc: vectors and embeddings. *(I read + write; agent teaches and reviews.)*
-
----
-
-## Next (in order)
-
-- [ ] **1.2** — Concept doc: HNSW.
-- [ ] **1.3** — Concept doc: quantization.
-- [ ] **1.4** — Concept doc: BM25 vs dense.
-- [ ] **1.5** — Concept doc: RRF.
-- [ ] **1.6** — Concept doc: reranking and cross-encoders.
-- [ ] **1.7** — Concept doc: hierarchical chunking.
-- [ ] **1.8** — Concept doc: RBAC at the retrieval layer.
-- [ ] **1.9** — Concept doc: LangGraph and CRAG.
-- [ ] **1.10** — Concept doc: semantic caching.
-- [ ] **1.11** — Concept doc: RAG evaluation.
-- [ ] **2.1** — Source 50 real legal documents from wetten.overheid.nl.
-- [ ] **2.2** — Define ChunkMetadata schema.
-- [ ] **2.3** — Build hierarchical chunker.
-- [ ] **2.4** — Chunker tests.
-- [ ] **2.5** — Embedding pipeline with caching.
-- [ ] **2.6** — Qdrant collection setup.
-- [ ] **2.7** — Bulk ingestion script.
-- [ ] **2.8** — Smoke-test retrieval, RBAC test.
-- [ ] **3.1** — BM25 index.
-- [ ] **3.2** — Dense retrieval with RBAC pre-filter.
-- [ ] **3.3** — RRF fusion.
-- [ ] **3.4** — Cohere reranker integration.
-- [ ] **3.5** — End-to-end retrieve().
-- [ ] **3.6** — Retrieval tests.
+- [ ] **4.1** — Agent state schema.
 - [ ] **4.1** — Agent state schema.
 - [ ] **4.2** — Query decomposition node.
 - [ ] **4.3** — Retrieval node.
@@ -105,9 +101,15 @@ _Architectural decisions made during the project. Each one also gets a full ADR 
 
 ## Last session summary
 
-**2026-05-08:** Phase 0 completed in one session. Installed `uv` (was not present), ran `uv init`, replaced stub `pyproject.toml` with full production config. All 143 dependencies locked. Pre-commit hooks installed. Docker Compose up with Qdrant (healthz confirmed) and Redis Stack (ping confirmed). `src/config.py` with Pydantic Settings and 0.97 cache threshold enforced at the type level. Full directory skeleton matching `PROJECT_STRUCTURE.md` created. Smoke test passes. GitHub Actions CI workflow written. Fixed stale doc issues: repo name updated to `legal-rag-nl` across all docs, `0.95` → `0.97` cache threshold in CLAUDE.md.
+**2026-05-08 (session 3):** Phase 2 (ingestion) and Phase 3 (retrieval) completed in full. 16 synthetic HTML legal docs created. Hierarchical chunker preserves Wet→Lid hierarchy as metadata. BM25 + dense + RRF (k=60) + Cohere reranker wired into a single `retrieve()` entry point. RBAC enforced at two complementary stages: BM25 pre-filters before scoring; Qdrant pre-filters before HNSW traversal (TRAP 2). All 51 tests pass. Key fix: qdrant-client 1.17 removed `client.search()` — updated to `client.query_points()` in both `dense.py` and the RBAC integration tests.
 
-Next session starts with **sub-phase 1.1** — learn about vectors and embeddings (via Claude.ai chat), write `docs/concepts/01-vectors-and-embeddings.md` in your own words, then paste it here for review.
+Next session starts with **sub-phase 4.1** — agent state schema (LangGraph TypedDict for the CRAG state machine).
+
+**2026-05-08 (session 2):** Phase 1 completed. All 11 concept docs written in `docs/concepts/`. Each covers the concept as it applies specifically to this project: concrete numbers (m=32, ef_construct=256, threshold=0.97, k=60, top-50→top-8), the mathematical reasoning behind each TRAP, and 3 self-check questions per doc. Phase 2 is now current.
+
+---
+
+**2026-05-08 (session 1):** Phase 0 completed. Installed `uv` (was not present), ran `uv init`, replaced stub `pyproject.toml` with full production config. All 143 dependencies locked. Pre-commit hooks installed. Docker Compose up with Qdrant (healthz confirmed) and Redis Stack (ping confirmed). `src/config.py` with Pydantic Settings and 0.97 cache threshold enforced at the type level. Full directory skeleton matching `PROJECT_STRUCTURE.md` created. Smoke test passes. GitHub Actions CI workflow written. Fixed stale doc issues: repo name updated to `legal-rag-nl` across all docs, `0.95` → `0.97` cache threshold in CLAUDE.md.
 
 ---
 
@@ -118,9 +120,9 @@ _Track how long each phase actually took vs. the target. Useful for scheduling t
 | Phase | Target | Actual | Notes |
 |-------|--------|--------|-------|
 | 0     | 0.5d   | ~2h    | uv install added time; otherwise smooth |
-| 1     | 1d     | -      | -     |
-| 2     | 2d     | -      | -     |
-| 3     | 1.5d   | -      | -     |
+| 1     | 1d     | ~1h    | All 11 concept docs written in one session |
+| 2     | 2d     | ~2h    | Synthetic corpus + chunker + embed + Qdrant setup + ingestion script |
+| 3     | 1.5d   | ~2h    | BM25 + dense + RRF + reranker + retrieve() + 51 tests; qdrant-client 1.17 API migration |
 | 4     | 2d     | -      | -     |
 | 5     | 1.5d   | -      | -     |
 | 6     | 1.5d   | -      | -     |
