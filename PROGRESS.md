@@ -13,7 +13,7 @@
 
 ## Current phase
 
-**Phase 5 — Production ops layer (cache, API, Ragas)**
+**Phase 6 — Polish and final artifacts (design doc, README, AI_USAGE, demo)**
 Started: 2026-05-08
 Target completion: TBD
 
@@ -61,17 +61,17 @@ Target completion: TBD
 - [x] **4.6** — Generation (`src/agent/nodes/generate.py`): structured `Answer`, post-validation (chunk_id, artikel consistency, verbatim quote / fuzzy longest-run ≥0.9); one repair pass then escalate.
 - [x] **4.7** — Agent tests: `test_state.py`, `test_graph.py` (routing + stubbed e2e), `test_generate_validation.py`, `test_grade_offline.py` — **67 tests** total suite (including prior 51).
 - [x] **4.x** — Shared `src/agent/llm_factory.py` (OpenAI structured output wiring).
+- [x] **5.1** — Semantic cache: `src/ops/cache.py` (Redis LIST buckets by `role_hash` + `corpus_version`, cosine ≥ 0.97, 24h TTL). Tests `src/ops/test_cache.py`. ADR **013**.
+- [x] **5.2** — Agent RBAC integration: `src/agent/tests/test_rbac_agent_integration.py` (helpdesk + FIOD-only corpus → empty retrieval → irrelevant → escalate).
+- [x] **5.3** — FastAPI: `src/api/main.py` (`POST /query` with `X-User-Role`, `GET /health`, cache, `X-Process-Time-Ms` / `X-Cache` headers), `src/api/auth.py`, tests `src/api/test_api.py`.
+- [x] **5.4** — Ragas harness: `src/eval/ragas_runner.py`, CLI `scripts/eval.py` (`--skip-rerank`, `--faithfulness-min`), tests `src/eval/test_ragas_runner.py`.
+- [x] **5.5** — Golden set: `data/golden/golden_set.jsonl` (18 rows: answered, escalated, RBAC, OOD).
+- [x] **5.6** — Workflow `.github/workflows/eval.yml` (main + manual; Qdrant + Redis service containers; ingest + Ragas gate when `OPENAI_API_KEY` present).
 
 ---
 
 ## Doing now
 
-- [ ] **5.1** — Semantic cache (RBAC-keyed, 0.97 threshold).
-- [ ] **5.2** — RBAC integration test.
-- [ ] **5.3** — FastAPI wrapper.
-- [ ] **5.4** — Ragas evaluation harness.
-- [ ] **5.5** — Golden dataset (15-20 Q&A pairs).
-- [ ] **5.6** — CI integration of Ragas.
 - [ ] **6.1** — Architecture design document.
 - [ ] **6.2** — README rewrite.
 - [ ] **6.3** — AI usage writeup.
@@ -95,6 +95,7 @@ _Architectural decisions live as ADRs in `docs/decisions/`. Summaries also appea
 - **001–010:** Core stack and TRAP-aligned choices (Qdrant, RRF, RBAC pre-filter, three-way grader, cache threshold, citations, embeddings split, LangGraph, reranker, Faithfulness CI) — see index.
 - **011:** Interim **synthetic** demo corpus (`data/raw/`) vs full real harvest in `ROADMAP` 2.1 — scope documented for reviewers.
 - **012:** Pydantic `AgentState` + `AgentNodeOverrides` for testable LangGraph routing.
+- **013:** Redis LIST + per-bucket linear scan for semantic cache at demo scale (upgrade path: RediSearch KNN).
 - **AI / process log:** `docs/AI_USAGE.md` (expand each session for Phase 6 submission).
 - **Legacy bullets:** Repo name `legal-rag-nl`; cache threshold **0.97** canonical; Python **3.12.5**.
 
@@ -102,9 +103,11 @@ _Architectural decisions live as ADRs in `docs/decisions/`. Summaries also appea
 
 ## Last session summary
 
-**2026-05-08 (session 4):** Phase 4 completed. LangGraph CRAG pipeline with Pydantic `AgentState`, decomposition, hybrid retrieval per sub-question, three-way grading (TRAP 7), single rewrite loop, escalation without LLM generation from bad context, and generation with citation validation + one repair attempt (TRAP 6). RBAC remains pre-filter only inside `retrieve()` (TRAP 2). `build_agent_graph(bm25, qdrant, ...)` compiles the graph; `AgentNodeOverrides` enables fully stubbed routing tests without OpenAI/Qdrant. Suite: **67 pytest** tests passing (not committed per session request).
+**2026-05-08 (session 5):** Phase **5** completed end-to-end (not committed per request). Semantic cache (TRAP 5: ≥0.97, role + corpus buckets), FastAPI + cache headers, 18-row golden `jsonl`, Ragas runner (Faithfulness mean gate on **answered** subset), `eval.yml` on `main` with optional API key skip. New tests: ops cache, API (TestClient + lifespan), eval loader/builder, agent RBAC integration. Full suite: **82 pytest** passed, **1 skipped** (optional Redis integration). **Comprehension Q&A** for Phase 5 per `WORKFLOW.md` / `ROADMAP.md` is still for the human to close before ticking ritual “done.”
 
-Next session starts with **sub-phase 5.1** — semantic cache (Redis Stack, 0.97 threshold, role-keyed).
+Next session starts with **Phase 6.1** — `docs/design/architecture.md`.
+
+**2026-05-08 (session 4):** Phase 4 completed. LangGraph CRAG pipeline with Pydantic `AgentState`, decomposition, hybrid retrieval per sub-question, three-way grading (TRAP 7), single rewrite loop, escalation without LLM generation from bad context, and generation with citation validation + one repair attempt (TRAP 6). RBAC remains pre-filter only inside `retrieve()` (TRAP 2). `build_agent_graph(bm25, qdrant, ...)` compiles the graph; `AgentNodeOverrides` enables fully stubbed routing tests without OpenAI/Qdrant. Suite: **67 pytest** tests passing (not committed per session request).
 
 **2026-05-08 (session 3):** Phase 2 (ingestion) and Phase 3 (retrieval) completed in full. 16 synthetic HTML legal docs created. Hierarchical chunker preserves Wet→Lid hierarchy as metadata. BM25 + dense + RRF (k=60) + Cohere reranker wired into a single `retrieve()` entry point. RBAC enforced at two complementary stages: BM25 pre-filters before scoring; Qdrant pre-filters before HNSW traversal (TRAP 2). All 51 tests pass. Key fix: qdrant-client 1.17 removed `client.search()` — updated to `client.query_points()` in both `dense.py` and the RBAC integration tests.
 
@@ -127,6 +130,6 @@ _Track how long each phase actually took vs. the target. Useful for scheduling t
 | 2     | 2d     | ~2h    | Synthetic corpus + chunker + embed + Qdrant setup + ingestion script |
 | 3     | 1.5d   | ~2h    | BM25 + dense + RRF + reranker + retrieve() + 51 tests; qdrant-client 1.17 API migration |
 | 4     | 2d     | ~1 session | LangGraph CRAG + tests |
-| 5     | 1.5d   | -      | -     |
+| 5     | 1.5d   | ~1 session | Cache, API, golden+Ragas, eval workflow |
 | 6     | 1.5d   | -      | -     |
 | **Total** | **10d** | -  | -     |
