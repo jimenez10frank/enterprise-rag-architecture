@@ -98,17 +98,10 @@ warn_unused_configs = true
 # Allow Pydantic models (they use dynamic assignment internally)
 plugins = ["pydantic.mypy"]
 
+# Packages not yet imported under src/ are omitted to avoid mypy
+# "unused section" warnings when running `mypy src` (e.g. in CI).
 [[tool.mypy.overrides]]
-module = [
-    "rank_bm25.*",
-    "ragas.*",
-    "langchain.*",
-    "langgraph.*",
-    "langchain_openai.*",
-    "langchain_cohere.*",
-    "cohere.*",
-    "bs4.*",
-]
+module = ["rank_bm25.*", "cohere.*", "bs4.*"]
 ignore_missing_imports = true
 
 # Pytest fixtures / marks are untyped; strict "untyped decorator" fails on @pytest.fixture.

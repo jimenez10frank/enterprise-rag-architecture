@@ -80,6 +80,7 @@ def rbac_test_collection() -> object:
     from qdrant_client import QdrantClient
     from qdrant_client.models import (
         Distance,
+        PayloadSchemaType,
         PointStruct,
         VectorParams,
     )
@@ -100,12 +101,12 @@ def rbac_test_collection() -> object:
     client.create_payload_index(
         collection_name=_TEST_COLLECTION,
         field_name="allowed_roles",
-        field_schema="keyword",
+        field_schema=PayloadSchemaType.KEYWORD,
     )
     client.create_payload_index(
         collection_name=_TEST_COLLECTION,
         field_name="classification",
-        field_schema="keyword",
+        field_schema=PayloadSchemaType.KEYWORD,
     )
 
     # Insert test points

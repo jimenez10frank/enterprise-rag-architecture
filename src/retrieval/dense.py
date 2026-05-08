@@ -17,7 +17,6 @@ NEVER move the filter to a post-retrieval Python step:
 from __future__ import annotations
 
 import logging
-from typing import cast
 
 from openai import OpenAI
 from qdrant_client import QdrantClient
@@ -41,7 +40,9 @@ def embed_query(query: str) -> list[float]:
         input=[query],
         dimensions=settings.embedding_dimensions,
     )
-    return cast(list[float], response.data[0].embedding)
+    # Avoid cast() — OpenAI stubs differ across environments (redundant-cast vs no-any-return).
+    emb = response.data[0].embedding
+    return [float(x) for x in emb]
 
 
 def _scored_point_to_chunk(hit: ScoredPoint) -> Chunk | None:
@@ -94,17 +95,23 @@ def dense_search(
         ]
     )
 
-    kwargs: dict[str, object] = {
-        "collection_name": settings.qdrant_collection,
-        "query": query_vector,
-        "query_filter": rbac_filter,
-        "limit": top_k,
-        "with_payload": True,
-    }
     if isinstance(search_params, QdrantSearchParams):
-        kwargs["search_params"] = search_params
-
-    response: QueryResponse = client.query_points(**kwargs)
+        response: QueryResponse = client.query_points(
+            collection_name=settings.qdrant_collection,
+            query=query_vector,
+            query_filter=rbac_filter,
+            limit=top_k,
+            with_payload=True,
+            search_params=search_params,
+        )
+    else:
+        response = client.query_points(
+            collection_name=settings.qdrant_collection,
+            query=query_vector,
+            query_filter=rbac_filter,
+            limit=top_k,
+            with_payload=True,
+        )
 
     output: list[tuple[str, float]] = []
     for hit in response.points:
