@@ -117,10 +117,6 @@ disallow_untyped_decorators = false
 module = ["src.api.main", "src.api.test_api", "src.ops.test_cache"]
 disallow_untyped_decorators = false
 
-[[tool.mypy.overrides]]
-module = "ragas.evaluation"
-ignore_missing_imports = true
-
 # ---------------------------------------------------------------------------
 # pytest
 # ---------------------------------------------------------------------------

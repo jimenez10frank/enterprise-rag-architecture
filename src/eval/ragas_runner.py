@@ -26,7 +26,7 @@ from datasets import Dataset
 from openai import OpenAI
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient
-from ragas.evaluation import EvaluationResult
+from ragas.dataset_schema import EvaluationResult
 
 from src.agent.graph import build_agent_graph
 from src.agent.state import AgentState, Answer
@@ -116,7 +116,10 @@ def run_ragas(
     """Run Ragas metrics; requires OpenAI credentials."""
     from ragas import evaluate
     from ragas.embeddings import OpenAIEmbeddings
+    from ragas.embeddings.base import BaseRagasEmbedding
     from ragas.llms import llm_factory
+    from ragas.llms.base import BaseRagasLLM
+    from ragas.metrics import Metric
     from ragas.metrics.collections import (
         AnswerRelevancy,
         ContextPrecision,
@@ -137,11 +140,13 @@ def run_ragas(
     llm = llm_factory(settings.llm_model, client=client)
     embeddings = OpenAIEmbeddings(client=client, model=settings.embedding_model)
 
-    metrics = [
-        Faithfulness(),
-        ContextPrecision(),
-        ContextRecall(),
-        AnswerRelevancy(),
+    # Ragas 0.2+ metrics capture llm/embeddings at construction; evaluate() still
+    # accepts global llm/embeddings for orchestration (types differ in stubs).
+    metrics: list[Faithfulness | ContextPrecision | ContextRecall | AnswerRelevancy] = [
+        Faithfulness(llm=llm),
+        ContextPrecision(llm=llm),
+        ContextRecall(llm=llm),
+        AnswerRelevancy(llm=llm, embeddings=embeddings),
     ]
 
     # Ragas does not need expected_outcome inside evaluate()
@@ -149,9 +154,9 @@ def run_ragas(
 
     scorecard = evaluate(
         eval_set,
-        metrics=metrics,
-        llm=llm,
-        embeddings=embeddings,
+        metrics=cast(Sequence[Metric], metrics),
+        llm=cast(BaseRagasLLM, llm),
+        embeddings=cast(BaseRagasEmbedding, embeddings),
         raise_exceptions=False,
     )
     return cast(EvaluationResult, scorecard)
