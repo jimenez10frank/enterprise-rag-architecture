@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
+from langchain_core.runnables import Runnable
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 
@@ -33,6 +34,11 @@ class AgentNodeOverrides:
     rewrite: Callable[[AgentState], dict[str, Any]] | None = None
     escalate: Callable[[AgentState], dict[str, Any]] | None = None
     generate: Callable[[AgentState], dict[str, Any]] | None = None
+
+
+def _as_node_runnable(fn: Callable[[AgentState], dict[str, Any]]) -> Runnable[AgentState, Any]:
+    """LangGraph runs plain callables; type stubs only list Runnable/_Node for `add_node`."""
+    return cast(Runnable[AgentState, Any], fn)
 
 
 def route_after_grade(state: AgentState) -> str:
@@ -65,12 +71,12 @@ def build_agent_graph(
     )
 
     graph = StateGraph(AgentState)
-    graph.add_node("decompose", ov.decompose or run_decompose)
-    graph.add_node("retrieve", retrieve_node)
-    graph.add_node("grade", ov.grade or run_grade)
-    graph.add_node("rewrite", ov.rewrite or run_rewrite)
-    graph.add_node("escalate", ov.escalate or run_escalate)
-    graph.add_node("generate", ov.generate or run_generate)
+    graph.add_node("decompose", _as_node_runnable(ov.decompose or run_decompose))
+    graph.add_node("retrieve", _as_node_runnable(retrieve_node))
+    graph.add_node("grade", _as_node_runnable(ov.grade or run_grade))
+    graph.add_node("rewrite", _as_node_runnable(ov.rewrite or run_rewrite))
+    graph.add_node("escalate", _as_node_runnable(ov.escalate or run_escalate))
+    graph.add_node("generate", _as_node_runnable(ov.generate or run_generate))
 
     graph.add_edge(START, "decompose")
     graph.add_edge("decompose", "retrieve")
