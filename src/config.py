@@ -26,7 +26,10 @@ class Settings(BaseSettings):
     )
 
     # --- LLM / Embeddings ---
-    openai_api_key: str = Field(..., description="OpenAI API key")
+    # Default "" so the module is importable without a .env file (useful in CI
+    # jobs that run only offline tests). Functions that call the API validate
+    # the key at call time and raise a clear error if it's empty.
+    openai_api_key: str = Field(default="", description="OpenAI API key")
     # Demo model for generation and grading (fast + cheap).
     llm_model: str = Field(default="gpt-4o-mini")
     # 3072-dim multilingual embeddings; swap for BAAI/bge-m3 in production.
@@ -34,7 +37,7 @@ class Settings(BaseSettings):
     embedding_dimensions: int = Field(default=3072)
 
     # --- Reranker ---
-    cohere_api_key: str = Field(..., description="Cohere API key")
+    cohere_api_key: str = Field(default="", description="Cohere API key")
     reranker_model: str = Field(default="rerank-multilingual-v3.0")
     # Retrieve broadly, rerank aggressively (see TRAPS.md TRAP 8).
     retrieval_top_k: int = Field(default=50)
