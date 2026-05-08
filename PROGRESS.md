@@ -59,7 +59,6 @@ Target completion: TBD
 ## Doing now
 
 - [ ] **4.1** — Agent state schema.
-- [ ] **4.1** — Agent state schema.
 - [ ] **4.2** — Query decomposition node.
 - [ ] **4.3** — Retrieval node.
 - [ ] **4.4** — Grader node (three-way).
