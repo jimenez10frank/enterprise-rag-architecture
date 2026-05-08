@@ -13,7 +13,7 @@
 
 ## Current phase
 
-**Phase 4 — CRAG agent (LangGraph state machine)**
+**Phase 5 — Production ops layer (cache, API, Ragas)**
 Started: 2026-05-08
 Target completion: TBD
 
@@ -53,18 +53,19 @@ Target completion: TBD
 - [x] **3.4** — Cohere reranker in `src/retrieval/rerank.py`. `rerank-multilingual-v3.0`. Top-50 → top-8 (TRAP 8).
 - [x] **3.5** — End-to-end `retrieve()` in `src/retrieval/__init__.py`. Lazy imports to avoid Settings() at module load. TYPE_CHECKING guards for type annotations.
 - [x] **3.6** — Full retrieval test suite: 10 fusion + 14 BM25 + 5 RBAC integration = **51 tests, all passing**.
+- [x] **4.1** — Agent state schema (`src/agent/state.py`): `AgentState`, `Answer`, `Citation`, `GradeResult`, `DecompositionResult`; Pydantic validation for cited vs unanswerable answers (TRAP 6).
+- [x] **4.2** — Query decomposition node (`src/agent/nodes/decompose.py`): gpt-4o-mini structured output → one or more sub-questions.
+- [x] **4.3** — Retrieval node (`src/agent/nodes/retrieve.py`): calls Phase 3 `retrieve()` per sub-question, dedupes chunks; `skip_rerank` for tests/offline.
+- [x] **4.4** — Grader node (`src/agent/nodes/grade.py`): three-way `relevant` / `ambiguous` / `irrelevant`; empty context short-circuit (no LLM).
+- [x] **4.5** — LangGraph (`src/agent/graph.py`): `decompose → retrieve → grade` with conditional edges; ambiguous + `retry_count < 1` → `rewrite → retrieve`; else irrelevant/ambiguous-exhausted → `escalate`; relevant → `generate`. `AgentNodeOverrides` for test doubles.
+- [x] **4.6** — Generation (`src/agent/nodes/generate.py`): structured `Answer`, post-validation (chunk_id, artikel consistency, verbatim quote / fuzzy longest-run ≥0.9); one repair pass then escalate.
+- [x] **4.7** — Agent tests: `test_state.py`, `test_graph.py` (routing + stubbed e2e), `test_generate_validation.py`, `test_grade_offline.py` — **67 tests** total suite (including prior 51).
+- [x] **4.x** — Shared `src/agent/llm_factory.py` (OpenAI structured output wiring).
 
 ---
 
 ## Doing now
 
-- [ ] **4.1** — Agent state schema.
-- [ ] **4.2** — Query decomposition node.
-- [ ] **4.3** — Retrieval node.
-- [ ] **4.4** — Grader node (three-way).
-- [ ] **4.5** — Conditional edges and fallback nodes.
-- [ ] **4.6** — Generation node with citation enforcement.
-- [ ] **4.7** — End-to-end agent tests.
 - [ ] **5.1** — Semantic cache (RBAC-keyed, 0.97 threshold).
 - [ ] **5.2** — RBAC integration test.
 - [ ] **5.3** — FastAPI wrapper.
@@ -89,20 +90,23 @@ _Things that need my input before continuing. Add as they arise._
 
 ## Decisions made
 
-_Architectural decisions made during the project. Each one also gets a full ADR in `docs/decisions/`._
+_Architectural decisions live as ADRs in `docs/decisions/`. Summaries also appear in `docs/decisions/DECISIONS_INDEX.md` (includes **alignment table** vs `ASSESSMENT.md`)._
 
-- **Repo name:** `legal-rag-nl`.
-- **Cache threshold:** 0.97 is the single canonical value — CLAUDE.md stale 0.95 corrected.
-- **Python version:** 3.12.5 (above the 3.11 minimum; no changes needed).
-- See `docs/decisions/` for full ADR entries (written as decisions are made in later phases).
+- **001–010:** Core stack and TRAP-aligned choices (Qdrant, RRF, RBAC pre-filter, three-way grader, cache threshold, citations, embeddings split, LangGraph, reranker, Faithfulness CI) — see index.
+- **011:** Interim **synthetic** demo corpus (`data/raw/`) vs full real harvest in `ROADMAP` 2.1 — scope documented for reviewers.
+- **012:** Pydantic `AgentState` + `AgentNodeOverrides` for testable LangGraph routing.
+- **AI / process log:** `docs/AI_USAGE.md` (expand each session for Phase 6 submission).
+- **Legacy bullets:** Repo name `legal-rag-nl`; cache threshold **0.97** canonical; Python **3.12.5**.
 
 ---
 
 ## Last session summary
 
-**2026-05-08 (session 3):** Phase 2 (ingestion) and Phase 3 (retrieval) completed in full. 16 synthetic HTML legal docs created. Hierarchical chunker preserves Wet→Lid hierarchy as metadata. BM25 + dense + RRF (k=60) + Cohere reranker wired into a single `retrieve()` entry point. RBAC enforced at two complementary stages: BM25 pre-filters before scoring; Qdrant pre-filters before HNSW traversal (TRAP 2). All 51 tests pass. Key fix: qdrant-client 1.17 removed `client.search()` — updated to `client.query_points()` in both `dense.py` and the RBAC integration tests.
+**2026-05-08 (session 4):** Phase 4 completed. LangGraph CRAG pipeline with Pydantic `AgentState`, decomposition, hybrid retrieval per sub-question, three-way grading (TRAP 7), single rewrite loop, escalation without LLM generation from bad context, and generation with citation validation + one repair attempt (TRAP 6). RBAC remains pre-filter only inside `retrieve()` (TRAP 2). `build_agent_graph(bm25, qdrant, ...)` compiles the graph; `AgentNodeOverrides` enables fully stubbed routing tests without OpenAI/Qdrant. Suite: **67 pytest** tests passing (not committed per session request).
 
-Next session starts with **sub-phase 4.1** — agent state schema (LangGraph TypedDict for the CRAG state machine).
+Next session starts with **sub-phase 5.1** — semantic cache (Redis Stack, 0.97 threshold, role-keyed).
+
+**2026-05-08 (session 3):** Phase 2 (ingestion) and Phase 3 (retrieval) completed in full. 16 synthetic HTML legal docs created. Hierarchical chunker preserves Wet→Lid hierarchy as metadata. BM25 + dense + RRF (k=60) + Cohere reranker wired into a single `retrieve()` entry point. RBAC enforced at two complementary stages: BM25 pre-filters before scoring; Qdrant pre-filters before HNSW traversal (TRAP 2). All 51 tests pass. Key fix: qdrant-client 1.17 removed `client.search()` — updated to `client.query_points()` in both `dense.py` and the RBAC integration tests.
 
 **2026-05-08 (session 2):** Phase 1 completed. All 11 concept docs written in `docs/concepts/`. Each covers the concept as it applies specifically to this project: concrete numbers (m=32, ef_construct=256, threshold=0.97, k=60, top-50→top-8), the mathematical reasoning behind each TRAP, and 3 self-check questions per doc. Phase 2 is now current.
 
@@ -122,7 +126,7 @@ _Track how long each phase actually took vs. the target. Useful for scheduling t
 | 1     | 1d     | ~1h    | All 11 concept docs written in one session |
 | 2     | 2d     | ~2h    | Synthetic corpus + chunker + embed + Qdrant setup + ingestion script |
 | 3     | 1.5d   | ~2h    | BM25 + dense + RRF + reranker + retrieve() + 51 tests; qdrant-client 1.17 API migration |
-| 4     | 2d     | -      | -     |
+| 4     | 2d     | ~1 session | LangGraph CRAG + tests |
 | 5     | 1.5d   | -      | -     |
 | 6     | 1.5d   | -      | -     |
 | **Total** | **10d** | -  | -     |

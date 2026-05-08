@@ -109,6 +109,10 @@ ignore_missing_imports = true
 module = "src.retrieval.tests.*"
 disallow_untyped_decorators = false
 
+[[tool.mypy.overrides]]
+module = "src.agent.tests.*"
+disallow_untyped_decorators = false
+
 # ---------------------------------------------------------------------------
 # pytest
 # ---------------------------------------------------------------------------
