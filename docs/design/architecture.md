@@ -84,11 +84,11 @@ Each chunk carries fields you see in `src/ingestion/schema.py`, including:
 - Legal **position** in the hierarchy (wet, artikel, _lid_, etc.).
 - **Sensitivity**: public / internal / FIOD-style, plus **`allowed_roles`** — who may retrieve this chunk at all.
 
-Design rule (**TRAP 1** in [`TRAPS.md`](../../TRAPS.md)): no “dumb” character-only splitter for statute text; structure first.
+Design rule (**TRAP 1** in [`TRAPS.md`](../project/TRAPS.md)): no “dumb” character-only splitter for statute text; structure first.
 
 ### 2.3 Vector database and “what knobs do we turn?”
 
-**Choice:** **Qdrant** for large-scale production (tens of millions of vectors, strong filtered search). For a classroom-scale Postgres + pgvector setup, see the trade-offs in `TRAPS.md` — we still document Qdrant as the primary production target.
+**Choice:** **Qdrant** for large-scale production (tens of millions of vectors, strong filtered search). For a classroom-scale Postgres + pgvector setup, see the trade-offs in `docs/project/TRAPS.md` — we still document Qdrant as the primary production target.
 
 **Numbers used in this repository** (`src/ingestion/qdrant_setup.py`):
 
@@ -236,7 +236,7 @@ Optional **LangSmith** traces help debug individual runs when keys are present.
 
 ## 6. Where each design “trap” is covered
 
-[`TRAPS.md`](../../TRAPS.md) lists mistakes we deliberately avoid. This document maps them by section: chunking (§2), RBAC (§3.3, §5.2), Qdrant vs pgvector (§2.3), RRF (§3.2), cache (§5.1), citations (§4.4), grader (§4.3), rerank sizes (§3.4), HyDE vs decomposition (§4.2), embeddings residency (§2.4), metrics (§5.4).
+[`TRAPS.md`](../project/TRAPS.md) lists mistakes we deliberately avoid. This document maps them by section: chunking (§2), RBAC (§3.3, §5.2), Qdrant vs pgvector (§2.3), RRF (§3.2), cache (§5.1), citations (§4.4), grader (§4.3), rerank sizes (§3.4), HyDE vs decomposition (§4.2), embeddings residency (§2.4), metrics (§5.4).
 
 ---
 
@@ -262,8 +262,9 @@ Optional **LangSmith** traces help debug individual runs when keys are present.
 
 ## 9. Related documents
 
-- Non-negotiable rules: [`TRAPS.md`](../../TRAPS.md)
-- Stack choices: [`STACK.md`](../../STACK.md)
+- Assignment: [`ASSESSMENT.md`](../project/ASSESSMENT.md)
+- Non-negotiable rules: [`TRAPS.md`](../project/TRAPS.md)
+- Stack choices: [`STACK.md`](../project/STACK.md)
 - Decision log: [`docs/decisions/DECISIONS_INDEX.md`](../decisions/DECISIONS_INDEX.md)
 - Learning notes: [`docs/concepts/CONCEPTS_INDEX.md`](../concepts/CONCEPTS_INDEX.md)
 

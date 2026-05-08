@@ -42,7 +42,7 @@ def _as_node_runnable(fn: Callable[[AgentState], dict[str, Any]]) -> Runnable[Ag
 
 
 def route_after_grade(state: AgentState) -> str:
-    """Conditional router: single rewrite attempt for ambiguous (TRAPS.md TRAP 7)."""
+    """Conditional router: single rewrite attempt for ambiguous (docs/project/TRAPS.md TRAP 7)."""
     g = state.grade
     if g == "relevant":
         return "generate"

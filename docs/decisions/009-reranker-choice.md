@@ -6,7 +6,7 @@
 
 ## Context
 
-The assessment wants **high precision** after hybrid retrieval. Bi-encoders (embeddings) alone are weaker at fine-grained relevance than **cross-encoders**, but cross-encoders are **slow** — so we **retrieve broadly** and **rerank aggressively** (`TRAPS.md` TRAP 8).
+The assessment wants **high precision** after hybrid retrieval. Bi-encoders (embeddings) alone are weaker at fine-grained relevance than **cross-encoders**, but cross-encoders are **slow** — so we **retrieve broadly** and **rerank aggressively** (`docs/project/TRAPS.md` TRAP 8).
 
 ## Options considered
 
@@ -16,7 +16,7 @@ The assessment wants **high precision** after hybrid retrieval. Bi-encoders (emb
 
 ### Option B: Cohere `rerank-multilingual-v3.0` for demo
 
-- **Pros:** Strong Dutch; simple API; matches `STACK.md`.
+- **Pros:** Strong Dutch; simple API; matches `docs/project/STACK.md`.
 - **Cons:** Classified text must not leave perimeter in production.
 
 ### Option C: Self-hosted `BAAI/bge-reranker-v2-m3` in production
@@ -38,6 +38,6 @@ Pipeline numbers: **top-50 per retriever → RRF top-50 → rerank to top-8** fo
 
 ## References
 
-- `TRAPS.md` TRAP 8
-- `STACK.md` (Reranking)
+- `docs/project/TRAPS.md` TRAP 8
+- `docs/project/STACK.md` (Reranking)
 - `src/retrieval/rerank.py`, `src/retrieval/__init__.py`

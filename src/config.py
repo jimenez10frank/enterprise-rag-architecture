@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     # --- Reranker ---
     cohere_api_key: str = Field(default="", description="Cohere API key")
     reranker_model: str = Field(default="rerank-multilingual-v3.0")
-    # Retrieve broadly, rerank aggressively (see TRAPS.md TRAP 8).
+    # Retrieve broadly, rerank aggressively (see docs/project/TRAPS.md TRAP 8).
     retrieval_top_k: int = Field(default=50)
     reranker_top_k: int = Field(default=8)
 
@@ -54,7 +54,7 @@ class Settings(BaseSettings):
 
     # --- Semantic cache ---
     # >= 0.97 required for fiscal/legal data — year-versioned queries must NOT
-    # hit a stale cache entry from a prior year (see TRAPS.md TRAP 5).
+    # hit a stale cache entry from a prior year (see docs/project/TRAPS.md TRAP 5).
     semantic_cache_threshold: float = Field(default=0.97, ge=0.97, le=1.0)
     semantic_cache_ttl_seconds: int = Field(default=86400)  # 24 hours
 

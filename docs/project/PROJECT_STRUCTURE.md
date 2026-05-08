@@ -9,14 +9,7 @@
 ```
 legal-rag-nl/
 ├── README.md                      ← Front door. Quick-start + links.
-├── CLAUDE.md                      ← Agent context (auto-read by Claude Code).
-├── ASSESSMENT.md                  ← System requirements and scope.
-├── TRAPS.md                       ← Critical gotchas. Re-read every session.
-├── STACK.md                       ← Tech choices and rationale.
-├── ROADMAP.md                     ← Phase plan with sub-phases.
-├── PROGRESS.md                    ← Living state tracker.
-├── PROJECT_STRUCTURE.md           ← This file.
-├── WORKFLOW.md                    ← Prompt patterns for Claude Code.
+├── CLAUDE.md                      ← Pointer to docs/project/CLAUDE.md (agent tools).
 ├── pyproject.toml                 ← Python project config (uv, ruff, mypy, pytest).
 ├── uv.lock                        ← Reproducible dep versions.
 ├── .python-version                ← 3.11
@@ -33,6 +26,17 @@ legal-rag-nl/
 │       └── eval.yml               ← Ragas eval on main branch (manual trigger).
 │
 ├── docs/
+│   ├── project/                   ← Handbook: ASSESSMENT, TRAPS, STACK, ROADMAP, …
+│   │   ├── README.md              ← Index of handbook files.
+│   │   ├── ASSESSMENT.md
+│   │   ├── CLAUDE.md
+│   │   ├── TRAPS.md
+│   │   ├── STACK.md
+│   │   ├── ROADMAP.md
+│   │   ├── PROGRESS.md
+│   │   ├── PROJECT_STRUCTURE.md ← This file.
+│   │   ├── WORKFLOW.md
+│   │   └── SETUP_PROMPT.md
 │   ├── concepts/                  ← My learning notes (Phase 1).
 │   │   ├── 01-vectors-and-embeddings.md
 │   │   ├── 02-hnsw.md

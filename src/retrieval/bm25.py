@@ -11,7 +11,7 @@ leaks existence of neighbours). We therefore filter by user role before scoring
 rather than after, which eliminates any question of information leakage.
 
 For demo scale (hundreds to low-thousands of chunks) rank_bm25 is in-process and
-fast enough. At 20M chunks, swap for Elasticsearch / OpenSearch. See STACK.md.
+fast enough. At 20M chunks, swap for Elasticsearch / OpenSearch. See docs/project/STACK.md.
 
 See docs/concepts/04-bm25-vs-dense.md for the rationale behind running both.
 """

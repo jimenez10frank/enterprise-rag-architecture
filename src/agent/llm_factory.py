@@ -19,7 +19,7 @@ T = TypeVar("T", bound=BaseModel)
 
 
 def chat_openai(*, temperature: float = 0.0) -> ChatOpenAI:
-    """Configured ChatOpenAI instance for gpt-4o-mini (STACK.md)."""
+    """Configured ChatOpenAI instance for gpt-4o-mini (docs/project/STACK.md)."""
     if not settings.openai_api_key:
         msg = "OPENAI_API_KEY is required for agent LLM calls"
         raise ValueError(msg)

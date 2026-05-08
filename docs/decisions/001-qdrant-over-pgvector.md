@@ -14,7 +14,7 @@ The assessment targets hundreds of thousands of documents and **20M+ chunks** at
 
 - **Description:** Store vectors in Postgres alongside relational data.
 - **Pros:** Familiar ops, single DB for small teams; fine at moderate scale.
-- **Cons:** At 20M+ vectors, recall/latency and filter performance degrade versus purpose-built vector DBs unless heavily tuned (see `TRAPS.md` TRAP 3).
+- **Cons:** At 20M+ vectors, recall/latency and filter performance degrade versus purpose-built vector DBs unless heavily tuned (see `docs/project/TRAPS.md` TRAP 3).
 
 ### Option B: Qdrant (self-hostable, Rust core)
 
@@ -34,8 +34,8 @@ We chose **Option B (Qdrant)** for the **production design and demo implementati
 
 Reasoning:
 
-- Assessment asks for explicit **HNSW** and **quantization** parameters — Qdrant exposes these directly (`STACK.md`).
-- **RBAC** must be a **server-side pre-filter** at query time; Qdrant payload indexes align with that (`TRAPS.md` TRAP 2).
+- Assessment asks for explicit **HNSW** and **quantization** parameters — Qdrant exposes these directly (`docs/project/STACK.md`).
+- **RBAC** must be a **server-side pre-filter** at query time; Qdrant payload indexes align with that (`docs/project/TRAPS.md` TRAP 2).
 - pgvector remains **acceptable for smaller deployments** but is **not** the production recommendation at 20M+ chunks.
 
 ## Consequences
@@ -48,6 +48,6 @@ Reasoning:
 
 ## References
 
-- `TRAPS.md` TRAP 3
-- `STACK.md` (Vector database)
+- `docs/project/TRAPS.md` TRAP 3
+- `docs/project/STACK.md` (Vector database)
 - `src/ingestion/qdrant_setup.py`

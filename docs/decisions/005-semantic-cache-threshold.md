@@ -12,7 +12,7 @@ FAQ-style caching saves cost and latency, but tax questions are **year- and law-
 
 ### Option A: Threshold ~0.85–0.92 (“generous” hit rate)
 
-- **Cons:** Unacceptable false hits on near-duplicate policy questions (`TRAPS.md` TRAP 5).
+- **Cons:** Unacceptable false hits on near-duplicate policy questions (`docs/project/TRAPS.md` TRAP 5).
 
 ### Option B: Threshold **≥ 0.97** + role hash + corpus version key
 
@@ -26,7 +26,7 @@ We chose **Option B**.
 Reasoning:
 
 - Enforced at the **type/config** level: `semantic_cache_threshold` in `src/config.py` uses `ge=0.97`.
-- Cache keys must include **role** and **corpus_version** when implemented (`STACK.md`), or RBAC / stale-law bugs follow.
+- Cache keys must include **role** and **corpus_version** when implemented (`docs/project/STACK.md`), or RBAC / stale-law bugs follow.
 
 ## Consequences
 
@@ -36,6 +36,6 @@ Reasoning:
 
 ## References
 
-- `TRAPS.md` TRAP 5
-- `STACK.md` (Cache)
+- `docs/project/TRAPS.md` TRAP 5
+- `docs/project/STACK.md` (Cache)
 - `src/config.py`

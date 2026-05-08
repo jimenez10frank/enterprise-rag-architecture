@@ -99,13 +99,14 @@ You need **Python 3.11+**, **Docker**, and API keys from **OpenAI** and **Cohere
 
 ## Where to read more
 
-| Document                                                           | Who is it for?                                                                |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------------------- | --- |
-| [Architecture (friendly + technical)](docs/design/architecture.md) | Anyone who wants to understand **how and why** the system is built            |
-| [Concepts — short lessons](docs/concepts/CONCEPTS_INDEX.md)        | Readers who like bite-sized explanations (embeddings, search, permissions, …) |
-| [Decisions (ADRs)](docs/decisions/DECISIONS_INDEX.md)              | People who want **why we chose X over Y**                                     |     |
-| [Things we refuse to get wrong](TRAPS.md)                          | Design rules we treat as non-negotiable                                       |
-| [Roadmap / progress](ROADMAP.md), [PROGRESS.md](PROGRESS.md)       | How the work was phased and what is done                                      |
+| Document | Who is it for? |
+|----------|----------------|
+| [Architecture (friendly + technical)](docs/design/architecture.md) | How and why the system is built |
+| [Project handbook (requirements, traps, roadmap)](docs/project/README.md) | Assessment brief, stack, workflow, progress |
+| [Concepts — short lessons](docs/concepts/CONCEPTS_INDEX.md) | Bite-sized explanations (embeddings, search, permissions, …) |
+| [Decisions (ADRs)](docs/decisions/DECISIONS_INDEX.md) | Why we chose X over Y |
+| [Things we refuse to get wrong](docs/project/TRAPS.md) | Non‑negotiable design rules |
+| [Roadmap](docs/project/ROADMAP.md) and [progress log](docs/project/PROGRESS.md) | Phasing and what is done |
 
 ## Evaluation (quality checks)
 
@@ -118,4 +119,4 @@ Automated eval on `main`: [.github/workflows/eval.yml](.github/workflows/eval.ym
 
 ## Important note
 
-This project was built for a **learning / assessment** context. The sample documents are **not** a full copy of official sources. If you ever use ideas from here for **real classified data**, read [TRAPS.md](TRAPS.md) first — especially permissions, caching rules, and where embeddings may legally be computed.
+This project was built for a **learning / assessment** context. The sample documents are **not** a full copy of official sources. If you ever use ideas from here for **real classified data**, read [docs/project/TRAPS.md](docs/project/TRAPS.md) first — especially permissions, caching rules, and where embeddings may legally be computed.

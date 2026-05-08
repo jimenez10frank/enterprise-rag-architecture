@@ -62,7 +62,7 @@ Each numbered concept doc in this folder includes an implementation pointer when
 
 ## How to write a concept doc (the routine)
 
-1. **Learn (regular Claude.ai chat).** Use the prompt from `WORKFLOW.md` to get a tailored explanation.
+1. **Learn (regular Claude.ai chat).** Use the prompt from [`WORKFLOW.md`](../project/WORKFLOW.md) to get a tailored explanation.
 2. **Read until comfortable.** Ask follow-ups. No code yet.
 3. **Close the chat.** Open this `docs/concepts/NN-topic.md` file fresh.
 4. **Write in your own words.** No copy-paste. If you can't write a sentence without copying, go back to step 1.

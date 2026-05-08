@@ -1,7 +1,7 @@
 """LangGraph CRAG agent: decompose → retrieve → grade → generate or correct.
 
 RBAC travels only via `user_roles` into the retrieval node; the LLM never
-filters permissions (TRAPS.md TRAP 2). Citations are structurally enforced
+filters permissions (docs/project/TRAPS.md TRAP 2). Citations are structurally enforced
 before any answer is returned (TRAP 6).
 """
 

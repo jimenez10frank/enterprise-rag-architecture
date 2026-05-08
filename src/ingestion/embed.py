@@ -6,7 +6,7 @@ failure resumes from the cache rather than re-billing the API.
 
 Production note: swap the model for BAAI/bge-m3 (self-hosted) for any
 classified content. Sending classified text to the OpenAI API is a data
-residency / GDPR violation for the Belastingdienst. See TRAPS.md TRAP 10.
+residency / GDPR violation for the Belastingdienst. See docs/project/TRAPS.md TRAP 10.
 """
 
 from __future__ import annotations

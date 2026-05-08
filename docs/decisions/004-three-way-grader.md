@@ -13,7 +13,7 @@ Linear RAG generates even when context is weak → **hallucination**. The assess
 ### Option A: Binary relevance
 
 - **Description:** Relevant vs not; single retry.
-- **Cons:** Collapses **ambiguous** (recoverable with rewrite) and **irrelevant** (should refuse) into one bucket (`TRAPS.md` TRAP 7).
+- **Cons:** Collapses **ambiguous** (recoverable with rewrite) and **irrelevant** (should refuse) into one bucket (`docs/project/TRAPS.md` TRAP 7).
 
 ### Option B: Three-way labels with distinct edges
 
@@ -40,6 +40,6 @@ Reasoning:
 
 ## References
 
-- `TRAPS.md` TRAP 7
+- `docs/project/TRAPS.md` TRAP 7
 - `docs/concepts/09-langgraph-crag.md`
 - `src/agent/nodes/grade.py`, `src/agent/graph.py`

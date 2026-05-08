@@ -12,7 +12,7 @@ Module 3 of the assessment asks for a **CRAG state machine**. We need explicit *
 
 ### Option A: LlamaIndex-centric stack
 
-- **Cons:** Weaker first-class story for **graph control-flow** vs LangGraph for the CRAG loop (`STACK.md`).
+- **Cons:** Weaker first-class story for **graph control-flow** vs LangGraph for the CRAG loop (`docs/project/STACK.md`).
 
 ### Option B: Raw OpenAI SDK + hand-rolled state machine
 
@@ -29,7 +29,7 @@ We chose **Option C**.
 
 Reasoning:
 
-- Matches `STACK.md` and Phase 4 `src/agent/graph.py` implementation.
+- Matches `docs/project/STACK.md` and Phase 4 `src/agent/graph.py` implementation.
 
 ## Consequences
 
@@ -39,5 +39,5 @@ Reasoning:
 
 ## References
 
-- `STACK.md` (RAG framework)
+- `docs/project/STACK.md` (RAG framework)
 - `src/agent/graph.py`

@@ -1,6 +1,6 @@
 # AI usage during development
 
-> Required by `ASSESSMENT.md`: explain **what AI generated**, **what you wrote**, and **what you learned**. This file is the submission-ready writeup for Phase 6.3; session-level detail also appears in [`PROGRESS.md`](../PROGRESS.md).
+> Required by `docs/project/ASSESSMENT.md`: explain **what AI generated**, **what you wrote**, and **what you learned**. This file is the submission-ready writeup for Phase 6.3; session-level detail also appears in [`PROGRESS.md`](../project/PROGRESS.md).
 
 ---
 
@@ -8,11 +8,11 @@
 
 | Tool | Role |
 |------|------|
-| **Cursor** (agent mode) | End-to-end implementation: modules under `src/`, tests, Docker/CI YAML, scripts, docs aligned with `TRAPS.md` and `STACK.md`. |
-| **Claude / ChatGPT** (optional) | Teaching passes for **concept docs** per `WORKFLOW.md`: explanations in chat, then **your** prose in `docs/concepts/`. |
+| **Cursor** (agent mode) | End-to-end implementation: modules under `src/`, tests, Docker/CI YAML, scripts, docs aligned with `docs/project/TRAPS.md` and `docs/project/STACK.md`. |
+| **Claude / ChatGPT** (optional) | Teaching passes for **concept docs** per `docs/project/WORKFLOW.md`: explanations in chat, then **your** prose in `docs/concepts/`. |
 | **Claude Code** | Same class of assistance as Cursor when noted in progress summaries. |
 
-No single tool owned “architecture”: constraints came from **`ASSESSMENT.md`**, **`TRAPS.md`**, and human review.
+No single tool owned “architecture”: constraints came from **`docs/project/ASSESSMENT.md`**, **`docs/project/TRAPS.md`**, and human review.
 
 ---
 
@@ -20,24 +20,24 @@ No single tool owned “architecture”: constraints came from **`ASSESSMENT.md`
 
 | Area | Typical AI contribution | What you should **own** (understanding + defense) |
 |------|-------------------------|-----------------------------------------------------|
-| **Boilerplate** | Package layout, pytest structure, GitHub Actions patterns | Why module boundaries match `PROJECT_STRUCTURE.md`. |
+| **Boilerplate** | Package layout, pytest structure, GitHub Actions patterns | Why module boundaries match `docs/project/PROJECT_STRUCTURE.md`. |
 | **TRAP-aligned code** | Qdrant filter placement, RRF, reranker top-K, cache key shape | **Why** post-retrieval RBAC leaks (TRAP 2); **why** RRF not alpha fusion (TRAP 4). |
 | **LangGraph** | Node wiring, conditional edges, `AgentNodeOverrides` for tests | Three-way grader semantics; when to escalate vs retry (TRAP 7). |
 | **Concept docs** | Explanations in chat | **Your** wording in `docs/concepts/`; self-check questions you can answer aloud. |
 | **ADRs / design doc** | Drafts from project context | Accept/reject trade-offs; align with org constraints (e.g. data residency). |
 | **Phase 6 polish** | README, `docs/design/architecture.md` structure | Accuracy check against real `src/` behavior; Loom script and recording. |
 
-**Non-delegable:** Explaining RBAC pre-filter and citation enforcement without reading **`TRAPS.md`**.
+**Non-delegable:** Explaining RBAC pre-filter and citation enforcement without reading **`docs/project/TRAPS.md`**.
 
 ---
 
-## Prompt patterns used (from `WORKFLOW.md`, with examples)
+## Prompt patterns used (from `docs/project/WORKFLOW.md`, with examples)
 
 ### Session start (alignment before code)
 
-Paste the ritual from `WORKFLOW.md`: read `ASSESSMENT.md` → `PROGRESS.md` → `TRAPS.md` → … then summarize phase, next step, contradictions, questions — **no code in the first reply**.
+Paste the ritual from `docs/project/WORKFLOW.md`: read `ASSESSMENT.md` → `PROGRESS.md` → `TRAPS.md` (all under `docs/project/`) → … then summarize phase, next step, contradictions, questions — **no code in the first reply**.
 
-**Example (abbreviated):** *“Read PROGRESS.md and TRAPS.md. We are on Phase 5.3. Next: FastAPI `/query` with `X-User-Role`. List any conflict between STACK.md and the latest qdrant-client API before coding.”*
+**Example (abbreviated):** *“Read `docs/project/PROGRESS.md` and `docs/project/TRAPS.md`. We are on Phase 5.3. Next: FastAPI `/query` with `X-User-Role`. List any conflict between `docs/project/STACK.md` and the latest qdrant-client API before coding.”*
 
 Outcome: agent surfaced API migration (`query_points` vs `search`) before editing `dense.py`.
 
@@ -102,13 +102,13 @@ Outcome: nuance fixes without flattening the learner’s phrasing.
 - **Design doc:** [`docs/design/architecture.md`](./design/architecture.md)
 - **README:** quick start, badges, links to concepts, decisions, and this file
 - **Demo:** Loom URL placeholder in README until you record
-- **Release hygiene:** `v1.0` tag and GitHub topics — manual steps listed in [`PROGRESS.md`](../PROGRESS.md) (not done by agent)
+- **Release hygiene:** `v1.0` tag and GitHub topics — manual steps listed in [`PROGRESS.md`](../project/PROGRESS.md) (not done by agent)
 
 ---
 
 ## Links
 
 - Architectural decisions: [`docs/decisions/DECISIONS_INDEX.md`](./decisions/DECISIONS_INDEX.md)
-- Non-negotiables: [`TRAPS.md`](../TRAPS.md)
-- Live progress: [`PROGRESS.md`](../PROGRESS.md)
+- Non-negotiables: [`TRAPS.md`](../project/TRAPS.md)
+- Live progress: [`PROGRESS.md`](../project/PROGRESS.md)
 - System overview (submitted design): [`docs/design/architecture.md`](./design/architecture.md)
